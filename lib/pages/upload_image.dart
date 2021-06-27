@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'dart:io';
+import 'dart:convert';
 
 import '../widgets/buttons.dart';
 
@@ -18,7 +19,8 @@ class _UploadImagePageState extends State<UploadImagePage> {
 
   static const double DEFAULT_PADDING = 20;
 
-  String postResponse = '';
+  Map<String, dynamic> postResponse = new Map();
+  String predictionResult = '';
 
 
   // POST request
@@ -35,9 +37,9 @@ class _UploadImagePageState extends State<UploadImagePage> {
         onSendProgress: (int current, int total) {print('----Uploading: ${current/total}');}
         );
       setState(() {
-        postResponse = response.toString();
+        postResponse = JsonCodec().decode(response.toString());
+        predictionResult = postResponse['class_name'];
       });
-      print(response.toString());
     } catch (e) {
       print(e);
     }
@@ -52,7 +54,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
     setState(() {
       if (pickedFile != null){
         _image = File(pickedFile.path);
-        postResponse = ' ';
+        predictionResult = '';
       } else {
         print('No image selected');
       }
@@ -117,7 +119,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
                             child: ElevatedButton(
                               onPressed: () { setState(() {
                                 _image = File('none');
-                                postResponse = ' ';
+                                predictionResult = '';
                               }); },
                               child: Text('Clear image'),
                               ),
@@ -135,7 +137,7 @@ class _UploadImagePageState extends State<UploadImagePage> {
                     ),
                     // Response
                     Text(
-                      '$postResponse'
+                      '$predictionResult'
                     ),
                   ],
                 ),
