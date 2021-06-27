@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
-
-import 'package:dio/dio.dart';
 
 import 'pages/upload_image.dart';
 
@@ -65,6 +61,18 @@ class _MyHomePageState extends State<MyHomePage> {
     double horizontalPadding = mediaQueryData.size.width * 0.05;
 
     return Scaffold(
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: FloatingActionButton(
+              onPressed: null,
+                child: Icon(Icons.person),
+              ),
+          ),
+        ]
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(horizontalPadding, verticalPadding, horizontalPadding, verticalPadding),
         child: Column(
@@ -78,7 +86,6 @@ class _MyHomePageState extends State<MyHomePage> {
               elevation: 10.0,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
               child: SizedBox(
-                width: mediaQueryData.size.width*0.9,
                 height: mediaQueryData.size.height*0.2,
                 child: FittedBox(
                   fit: BoxFit.none,
@@ -91,6 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  // Upload image
                   GestureDetector(
                     onTap: _pushUploadImage,
                     child: Card(
@@ -108,6 +116,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       ),
                     ),
                   ),
+                  // Take photo
                   Card(
                     color: Colors.white,
                     shadowColor: Colors.grey,
@@ -123,6 +132,24 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                 ],
+              ),
+            ),
+            // Card - map
+            Padding(
+              padding: const EdgeInsets.only(top: DEFAULT_PADDING),
+              child: Card(
+                color: Colors.white,
+                shadowColor: Colors.grey,
+                elevation: 10.0,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                child: SizedBox(
+                  width: mediaQueryData.size.height*0.9,
+                  height: mediaQueryData.size.height*0.23,
+                  child: FittedBox(
+                    fit: BoxFit.none,
+                    child: Text('Map')
+                  ),
+                ),
               ),
             ),
           ],
