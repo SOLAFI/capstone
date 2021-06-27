@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
 
 import 'pages/upload_image.dart';
 
@@ -81,11 +83,12 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             // Card - fun fact
             Card(
-              color: Colors.white,
+              color: Colors.grey[200],
               shadowColor: Colors.grey,
               elevation: 10.0,
               shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
               child: SizedBox(
+                width: mediaQueryData.size.width*0.9,
                 height: mediaQueryData.size.height*0.2,
                 child: FittedBox(
                   fit: BoxFit.none,
@@ -102,7 +105,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   GestureDetector(
                     onTap: _pushUploadImage,
                     child: Card(
-                      color: Colors.white,
+                      color: Colors.orange[100],
                       shadowColor: Colors.grey,
                       elevation: 10.0,
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
@@ -117,17 +120,20 @@ class _MyHomePageState extends State<MyHomePage> {
                     ),
                   ),
                   // Take photo
-                  Card(
-                    color: Colors.white,
-                    shadowColor: Colors.grey,
-                    elevation: 10.0,
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                    child: SizedBox(
-                      width: mediaQueryData.size.width*0.4,
-                      height: mediaQueryData.size.height*0.3,
-                      child: FittedBox(
-                        fit: BoxFit.none,
-                        child: Text('take photo')
+                  GestureDetector(
+                    onTap: _selectImage,
+                    child: Card(
+                      color: Colors.purple[100],
+                      shadowColor: Colors.grey,
+                      elevation: 10.0,
+                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                      child: SizedBox(
+                        width: mediaQueryData.size.width*0.4,
+                        height: mediaQueryData.size.height*0.3,
+                        child: FittedBox(
+                          fit: BoxFit.none,
+                          child: Text('take photo')
+                        ),
                       ),
                     ),
                   ),
@@ -143,8 +149,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 elevation: 10.0,
                 shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
                 child: SizedBox(
-                  width: mediaQueryData.size.height*0.9,
-                  height: mediaQueryData.size.height*0.23,
+                  width: mediaQueryData.size.width*0.9,
+                  height: mediaQueryData.size.height*0.2,
                   child: FittedBox(
                     fit: BoxFit.none,
                     child: Text('Map')
@@ -156,6 +162,20 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
     );
+  }
+
+  File _image = new File('none');
+  final picker = ImagePicker();
+  Future _selectImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null){
+        _image = File(pickedFile.path);
+        print(_image.path);
+      } else {
+        print('No image selected');
+      }
+    });
   }
 
   /// ********* Push page methods ***********
