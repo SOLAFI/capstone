@@ -3,9 +3,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'dart:io';
 
-import '../widgets/buttons.dart';
-
-
 
 class UploadImagePage extends StatefulWidget {
   UploadImagePage({Key? key}) : super(key: key);
@@ -66,8 +63,10 @@ class _UploadImagePageState extends State<UploadImagePage> {
 
     return Scaffold(
       // appBar: AppBar(
+      //   // Here we take the value from the MyHomePage object that was created by
+      //   // the App.build method, and use it to set our appbar title.
+      //   title: Text(widget.title),
       // ),
-      floatingActionButton: FloatingBackButton(),
       body: Center(
         child: Container(
           height: mediaQueryData.size.height*0.6,
@@ -146,6 +145,4 @@ class _UploadImagePageState extends State<UploadImagePage> {
       ),
     );
   }
-
-
 }
