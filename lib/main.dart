@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import "package:google_fonts/google_fonts.dart";
 
-import 'pages/upload_image.dart';
+import 'pages/image_preview.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,6 +53,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   static const double DEFAULT_PADDING = 20;
+
+    // Image picker
+  File _image = new File('none');
+  final picker = ImagePicker();
+  Future _selectImage() async {
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    setState(() {
+      if (pickedFile != null){
+        _image = File(pickedFile.path);
+        _pushImagePreviewPage();
+      } else {
+        print('No image selected');
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   // Upload image
                   GestureDetector(
-                    onTap: _pushUploadImage,
+                    onTap: _selectImage,
                     child: Card(
                       color: Colors.amber,
                       shadowColor: Colors.grey,
@@ -222,25 +237,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  File _image = new File('none');
-  final picker = ImagePicker();
-  Future _selectImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-        print(_image.path);
-      } else {
-        print('No image selected');
-      }
-    });
-  }
-
   /// ********* Push page methods ***********
 
-  void _pushUploadImage() {
+  void _pushImagePreviewPage() {
     Navigator.of(context).push(
-        new MaterialPageRoute(builder: (context) => new UploadImagePage()));
+        new MaterialPageRoute(builder: (context) => new ImagePreviewPage(image: _image,)));
   }
 }
