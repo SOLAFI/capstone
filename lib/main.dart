@@ -17,15 +17,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'TBD',
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
+        canvasColor: Colors.transparent,
         primarySwatch: Colors.blue,
       ),
       home: MyHomePage(title: 'Test Home Page'),
@@ -69,6 +61,18 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+    Future _takePhoto() async {
+    final pickedFile = await picker.getImage(source: ImageSource.camera);
+    setState(() {
+      if (pickedFile != null){
+        _image = File(pickedFile.path);
+        _pushImagePreviewPage();
+      } else {
+        print('No image selected');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
@@ -76,6 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
     double horizontalPadding = mediaQueryData.size.width * 0.05;
 
     return Scaffold(
+      backgroundColor: Colors.white,
       floatingActionButton:
           Column(mainAxisAlignment: MainAxisAlignment.end, children: [
         Padding(
@@ -165,7 +170,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                   // Take photo
                   GestureDetector(
-                    onTap: _selectImage,
+                    onTap: _takePhoto,
                     child: Card(
                       color: Colors.purple[400],
                       shadowColor: Colors.grey,

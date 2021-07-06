@@ -1,3 +1,4 @@
+import 'package:capstone/pages/recognition_result.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
@@ -20,15 +21,18 @@ class ImagePreviewPage extends StatefulWidget {
 
 class _ImagePreviewPageState extends State<ImagePreviewPage> {
 
-
-  static const double DEFAULT_PADDING = 20;
-
   Map<String, dynamic> postResponse = new Map();
   String predictionResult = '';
+
+  bool _isRecognizing = false;
 
 
   // POST request
   void _postToServer() async {
+
+    setState(() {
+      _isRecognizing = true;
+    });
 
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(_image.path, filename: _image.path.split('/').last),
@@ -39,11 +43,12 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
         "http://172.16.13.81:5000/recognize",
         data: formData,
         onSendProgress: (int current, int total) {print('----Uploading: ${current/total}');}
-        );
+      );
       setState(() {
-        postResponse = JsonCodec().decode(response.toString());
-        predictionResult = postResponse['class_name'];
+        _isRecognizing = false;
       });
+      postResponse = JsonCodec().decode(response.toString());
+      showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse));
     } catch (e) {
       print(e);
     }
@@ -81,8 +86,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     double mediaWidth = mediaQueryData.size.width;
 
     return Scaffold(
-      // appBar: AppBar(
-      // ),
+      backgroundColor: Colors.white,
       floatingActionButton: FloatingBackButton(),
       body: Center(
         child: SizedBox(
@@ -155,7 +159,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
               Padding(
                 padding: const EdgeInsets.only(top:10.0),
                 child: ElevatedButton(
-                  onPressed: _image.path=='none' ? null : _postToServer,
+                  onPressed: _image.path=='none'||_isRecognizing ? null : _postToServer,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Column(
@@ -169,14 +173,18 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                       ],
                     ),
                   ),
+                  
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(_image.path=='none' ? Colors.grey.shade400 : Colors.amber),
+                    backgroundColor: MaterialStateProperty.all<Color>(_image.path=='none'||_isRecognizing ? Colors.grey.shade400 : Colors.amber),
                   ),
                 ),
               ),
               // Response
-              Text(
-                '$predictionResult'
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  _isRecognizing ? "Recognizing..." : ""
+                ),
               ),
             ],
           ),
