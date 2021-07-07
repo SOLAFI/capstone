@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
       title: 'TBD',
       theme: ThemeData(
         canvasColor: Colors.transparent,
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.deepPurple,
       ),
       home: MyHomePage(title: 'Test Home Page'),
     );
@@ -61,11 +61,11 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
-    Future _takePhoto() async {
-    final pickedFile = await picker.getImage(source: ImageSource.camera);
+  Future _takePhoto() async {
+    final cameraFile = await ImagePicker().getImage(source: ImageSource.camera);
     setState(() {
-      if (pickedFile != null){
-        _image = File(pickedFile.path);
+      if (cameraFile != null){
+        _image = File(cameraFile.path);
         _pushImagePreviewPage();
       } else {
         print('No image selected');
@@ -215,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Padding(
               padding: const EdgeInsets.only(top: DEFAULT_PADDING),
               child: Card(
-                color: Colors.white,
+                color: Colors.grey.shade50,
                 shadowColor: Colors.grey,
                 elevation: 10.0,
                 shape: RoundedRectangleBorder(
