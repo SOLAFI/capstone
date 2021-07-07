@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import "package:google_fonts/google_fonts.dart";
+import 'package:permission_handler/permission_handler.dart';
 
 import 'pages/image_preview.dart';
 
@@ -75,6 +76,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
+
+    Future<Map<Permission, PermissionStatus>> statuses = [ Permission.camera,].request();
+
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double verticalPadding = mediaQueryData.size.height * 0.1;
     double horizontalPadding = mediaQueryData.size.width * 0.05;
