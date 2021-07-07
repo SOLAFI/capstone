@@ -150,7 +150,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                       onPressed: () { 
                         setState(() {
                           _image = File('none');
-                          predictionResult = '';
+                          _isRecognizing = false;
                         }); 
                       },
                       icon: Icon(
