@@ -25,6 +25,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   String predictionResult = '';
 
   bool _isRecognizing = false;
+  double _sendProgress = 0;
 
 
   // POST request
@@ -42,10 +43,13 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       var response = await Dio().post(
         "http://172.16.13.81:5000/recognize",
         data: formData,
-        onSendProgress: (int current, int total) {print('----Uploading: ${current/total}');}
+        onSendProgress: (int current, int total) {setState(() {
+          _sendProgress = current/total;
+        });}
       );
       setState(() {
         _isRecognizing = false;
+        _sendProgress = 0;
       });
       postResponse = JsonCodec().decode(response.toString());
       showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse));
@@ -186,6 +190,11 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                   _isRecognizing ? "Recognizing..." : ""
                 ),
               ),
+              _sendProgress==0? Container() : LinearProgressIndicator(
+                backgroundColor: Colors.grey,
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                value: _sendProgress,
+              )
             ],
           ),
         ),
