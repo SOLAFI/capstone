@@ -76,9 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-
-    Future<Map<Permission, PermissionStatus>> statuses = [ Permission.camera,].request();
-
     MediaQueryData mediaQueryData = MediaQuery.of(context);
     double verticalPadding = mediaQueryData.size.height * 0.1;
     double horizontalPadding = mediaQueryData.size.width * 0.05;
