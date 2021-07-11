@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import "package:google_fonts/google_fonts.dart";
-import 'package:permission_handler/permission_handler.dart';
 
 import 'pages/image_preview.dart';
 

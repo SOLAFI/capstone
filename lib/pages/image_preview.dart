@@ -116,7 +116,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
               ConstrainedBox(
                 constraints: BoxConstraints(
                   maxWidth: mediaWidth*0.8,
-                  maxHeight: mediaHeight*0.5,
+                  maxHeight: mediaHeight*0.4,
                   minHeight: 200,
                 ),
                 child: _image.path == 'none' ? Row(
@@ -135,6 +135,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
+                  // Button - Reselect
                   Padding(
                     padding: EdgeInsets.all(5),
                     child: IconButton(
@@ -144,6 +145,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                       )
                     ),
                   ),
+                  // Button - Clear image
                   Padding(
                     padding: EdgeInsets.all(5),
                     child: IconButton(
@@ -151,6 +153,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                         setState(() {
                           _image = File('none');
                           _isRecognizing = false;
+                          _sendProgress = 0;
                         }); 
                       },
                       icon: Icon(
@@ -183,18 +186,30 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                   ),
                 ),
               ),
-              // Response
+              _sendProgress==0? Container() : Padding(
+                padding: const EdgeInsets.only(top:8.0),
+                child: Column(
+                  children: [
+                    Text('Image uploading:', style: TextStyle(color: Colors.grey),),
+                    Padding(
+                      padding: const EdgeInsets.only(top:8.0),
+                      child: LinearProgressIndicator(
+                        backgroundColor: Colors.grey,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
+                        value: _sendProgress,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              // Recognizing...
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  _isRecognizing ? "Recognizing..." : ""
+                  _isRecognizing && _sendProgress==1 ? "Recognizing..." : "",
+                  style: TextStyle(color: Colors.grey),
                 ),
               ),
-              _sendProgress==0? Container() : LinearProgressIndicator(
-                backgroundColor: Colors.grey,
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.amber),
-                value: _sendProgress,
-              )
             ],
           ),
         ),
