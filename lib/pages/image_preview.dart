@@ -1,4 +1,5 @@
 import 'package:capstone/pages/recognition_result.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
@@ -22,10 +23,10 @@ class ImagePreviewPage extends StatefulWidget {
 class _ImagePreviewPageState extends State<ImagePreviewPage> {
 
   Map<String, dynamic> postResponse = new Map();
-  String predictionResult = '';
 
   bool _isRecognizing = false;
   double _sendProgress = 0;
+  bool _invalidImage = false;
 
 
   // POST request
@@ -51,8 +52,15 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
         _isRecognizing = false;
         _sendProgress = 0;
       });
-      postResponse = JsonCodec().decode(response.toString());
-      showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse));
+      print(response.toString());
+      if(response.toString()=="invalid image"){
+        _isRecognizing = true;  // Only to disable the recognize button, not really recognizing
+        _invalidImage = true;
+      }
+      else{
+        postResponse = JsonCodec().decode(response.toString());
+        showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse));
+      }
     } catch (e) {
       print(e);
     }
@@ -67,7 +75,8 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     setState(() {
       if (pickedFile != null){
         _image = File(pickedFile.path);
-        predictionResult = '';
+        _isRecognizing = false;
+        _invalidImage = false;
       } else {
         print('No image selected');
       }
@@ -79,6 +88,9 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   void initState() {
     super.initState();
     _image = widget.image;
+    _isRecognizing = false;
+    _sendProgress = 0;
+    _invalidImage = false;
   }
 
 
@@ -154,6 +166,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                           _image = File('none');
                           _isRecognizing = false;
                           _sendProgress = 0;
+                          _invalidImage = false;
                         }); 
                       },
                       icon: Icon(
@@ -164,7 +177,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                 ],
               ),
               Padding(
-                padding: const EdgeInsets.only(top:10.0),
+                padding: const EdgeInsets.symmetric(vertical:8.0),
                 child: ElevatedButton(
                   onPressed: _image.path=='none'||_isRecognizing ? null : _postToServer,
                   child: Padding(
@@ -186,7 +199,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                   ),
                 ),
               ),
-              _sendProgress==0? Container() : Padding(
+              _sendProgress==0||_sendProgress==1 ? Container() : Padding(
                 padding: const EdgeInsets.only(top:8.0),
                 child: Column(
                   children: [
@@ -203,13 +216,24 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                 ),
               ),
               // Recognizing...
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  _isRecognizing && _sendProgress==1 ? "Recognizing..." : "",
-                  style: TextStyle(color: Colors.grey),
-                ),
-              ),
+              _isRecognizing && _sendProgress==1 ? Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text("Recognizing...",
+                      style: TextStyle(color: Colors.grey),
+                    ),
+                  ),
+                  CupertinoActivityIndicator(
+                    radius: 20,
+                  )
+                ],
+              ) : Container(),
+              _invalidImage?
+              Text('Recognition failed :(\nIs this an image of a bird?',
+              style: TextStyle(color: Colors.red),
+              textAlign: TextAlign.center,
+              ):Container()
             ],
           ),
         ),
