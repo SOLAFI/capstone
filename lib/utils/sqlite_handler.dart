@@ -4,14 +4,14 @@ import 'package:sqflite/sqflite.dart';
 import '../data/record.dart';
 
 
-class SQLiteHandler {
+class RecDBProvider {
 
   static Future<Database> _initDatebase() async{
     return openDatabase(
       join(await getDatabasesPath(), 'record_database.db'),
       onCreate: (db, version){
         return db.execute(
-          'CREATE TABLE records(id INTEGER PRIMARY KEY, image_url TEXT)',
+          'CREATE TABLE records(id INTEGER PRIMARY KEY, image_url TEXT, timestamp INTEGER, latitude REAL, longitude REAL)',
         );
       },
       version: 1,
@@ -30,7 +30,10 @@ class SQLiteHandler {
     return List.generate(maps.length, (i) {
       return Record(
         id: maps[i]['id'],
-        imageURL: maps[i]['image_url']
+        imageURL: maps[i]['image_url'],
+        timestamp: 0,
+        latitude: 0,
+        longitude: 0,
       );
     });
   }
@@ -65,15 +68,22 @@ class SQLiteHandler {
   Future<Record> getRecordByID(int id) async{
     final db = await _initDatebase();
     List<Map> maps = await db.query('records',
-      columns: ['id', 'image_url'],
+      columns: ['id', 'image_url', 'timestamp', 'latitude', 'longitude'],
       where: 'id = ?',
       whereArgs: [id],
     );
     if (maps.length > 0) {
-      return Record(id: maps.first['id'], imageURL: maps.first['image_url']);
+      Map rec = maps.first;
+      return Record(
+        id: rec['id'],
+        imageURL: rec['image_url'],
+        timestamp: rec['timestamp'],
+        latitude: rec['latitude'],
+        longitude: rec['longitude'],
+      );
     }
     else {
-      return Record(id:-1, imageURL: '');
+      return Record(id:-1, imageURL: '', timestamp: -1, latitude: -1, longitude: -1);
     }
   }
 }

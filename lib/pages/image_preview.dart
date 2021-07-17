@@ -119,7 +119,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      PoppinsTitleText('Image\nPreview', 30, Colors.grey.shade500),
+                      PoppinsTitleText('Image\nPreview', 30, Colors.grey.shade500, TextAlign.start),
                     ],
                   ),
                 ),
@@ -189,7 +189,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                           Icons.search,
                           size: 40,
                         ),
-                        PoppinsTitleText('Recognize', 20, Colors.white),
+                        PoppinsTitleText('Recognize', 20, Colors.white, TextAlign.center),
                       ],
                     ),
                   ),

@@ -35,15 +35,18 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                   borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       child: SizedBox(
         width: mediaWidth,
-        height: mediaHeight*0.85,
+        height: mediaHeight*0.82,
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                PoppinsTitleText('Result:', 20, Colors.grey),
-                PoppinsTitleText(className, 30, Colors.black),
+                // Title label
+                PoppinsTitleText('Result:', 20, Colors.grey, TextAlign.center),
+                // Class name
+                PoppinsTitleText(className, 28, Colors.black, TextAlign.center),
+                // Wiki infobox image
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
                   child: ConstrainedBox(
@@ -54,47 +57,69 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                     child: Image.network(imageURL),
                   ),
                 ),
+                // Class details
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  padding: const EdgeInsets.only(top:8.0),
+                  child: Card(
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                    elevation: 5,
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Column(
                         children: [
-                          Text('Order: '),
-                          Text(orderName)
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PoppinsTitleText('Order: ', 16, Colors.grey.shade500, TextAlign.start),
+                              Text(orderName)
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PoppinsTitleText('Family: ', 16, Colors.grey.shade600, TextAlign.start),
+                              Text(familyName)
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PoppinsTitleText('Genus: ', 16, Colors.grey.shade700, TextAlign.start),
+                              Text(genusName)
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              PoppinsTitleText('Species: ', 16, Colors.grey.shade800, TextAlign.start),
+                              Text(speciesName)
+                            ],
+                          ),
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Family: '),
-                          Text(familyName)
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Genus: '),
-                          Text(genusName)
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Species: '),
-                          Text(speciesName)
-                        ],
-                      ),
-                    ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.all(10.0),
-                  child: Text(summary),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text('Report an issue'),
+                    Icon(Icons.feedback),
+                    Text('Helpful?'),
+                    Icon(Icons.thumb_up),
+                  ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.all(10.0),
+                  padding: const EdgeInsets.only(top: 20.0),
+                  child: PoppinsTitleText('Summary', 24, Colors.black, TextAlign.center),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                  child: Text(summary,
+                  textAlign: TextAlign.justify,),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text("\nSee full wiki page at: "+ pageURL),
                 )
               ],

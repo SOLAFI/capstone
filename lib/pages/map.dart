@@ -27,7 +27,7 @@ class _MapPageState extends State<MapPage>{
                   // generatedID++;
                   // var record = Record(id: generatedID, imageURL: 'example$generatedID');
                   // await insertRecord(record);
-                  List list = await SQLiteHandler.records();
+                  List list = await RecDBProvider.records();
                   setState(() {
                     text = list.toString();
                   });
