@@ -1,3 +1,4 @@
+import 'package:capstone/pages/map.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
@@ -21,6 +22,9 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.deepPurple,
       ),
       home: MyHomePage(title: 'Test Home Page'),
+      routes: {
+        '/map': (context) => MapPage(),
+      },
     );
   }
 }
@@ -214,25 +218,30 @@ class _MyHomePageState extends State<MyHomePage> {
             // Card - map
             Padding(
               padding: const EdgeInsets.only(top: DEFAULT_PADDING),
-              child: Card(
-                color: Colors.grey.shade50,
-                shadowColor: Colors.grey,
-                elevation: 10.0,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10))),
-                child: SizedBox(
-                  width: mediaQueryData.size.width * 0.9,
-                  height: mediaQueryData.size.height * 0.2,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: Icon(
-                          Icons.map_rounded,
-                          size: 150,
-                          color: Colors.grey[200],
+              child: GestureDetector(
+                onTap: (){
+                  Navigator.pushNamed(context, '/map');
+                },
+                child: Card(
+                  color: Colors.grey.shade50,
+                  shadowColor: Colors.grey,
+                  elevation: 10.0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(10))),
+                  child: SizedBox(
+                    width: mediaQueryData.size.width * 0.9,
+                    height: mediaQueryData.size.height * 0.2,
+                    child: Stack(
+                      children: [
+                        Positioned.fill(
+                          child: Icon(
+                            Icons.map_rounded,
+                            size: 150,
+                            color: Colors.grey[200],
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
