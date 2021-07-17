@@ -1,13 +1,16 @@
-import 'package:capstone/pages/recognition_result.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
+import 'dart:core';
 import 'dart:io';
 import 'dart:convert';
 
+import 'package:capstone/utils/sqlite_handler.dart';
+import 'package:capstone/pages/recognition_result.dart';
 import '../widgets/buttons.dart';
 import '../widgets/text.dart';
+import '../data/record.dart';
 
 
 
@@ -27,6 +30,12 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   bool _isRecognizing = false;
   double _sendProgress = 0;
   bool _invalidImage = false;
+  int recCount = 0;
+
+
+  Future<void> getRecordsCount() async{
+    recCount = await RecDBProvider.recordsCount();
+  }
 
 
   // POST request
@@ -52,15 +61,36 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
         _isRecognizing = false;
         _sendProgress = 0;
       });
-      print(response.toString());
+      // print(response.toString());
+      String result = '';
       if(response.toString()=="invalid image"){
         _isRecognizing = true;  // Only to disable the recognize button, not really recognizing
         _invalidImage = true;
+        result = response.toString();
       }
       else{
         postResponse = JsonCodec().decode(response.toString());
         showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse));
+        result = postResponse['class_name'];
       }
+      /*
+          Insert a record to SQLite DB
+       */
+      RecDBProvider.initDatabase();
+      String uploadedImage = _image.path;
+      double latitude = 0;
+      double longitude = 0;
+      int timestamp = DateTime.now().millisecondsSinceEpoch;
+      print('Current number of records: $recCount');
+      Record rec = new Record(
+        id: recCount+1,
+        timestamp: timestamp,
+        imageURL: uploadedImage,
+        result: result,
+        latitude: latitude,
+        longitude: longitude,
+      );
+      RecDBProvider.insertRecord(rec);
     } catch (e) {
       print(e);
     }
@@ -91,6 +121,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     _isRecognizing = false;
     _sendProgress = 0;
     _invalidImage = false;
+    getRecordsCount();
   }
 
 

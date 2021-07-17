@@ -90,7 +90,9 @@ class _MyHomePageState extends State<MyHomePage> {
         Padding(
           padding: EdgeInsets.only(bottom: 10),
           child: FloatingActionButton(
-            onPressed: null,
+            onPressed: (){
+              Navigator.of(context).pushNamed('/map');
+            },
             child: Icon(Icons.person),
           ),
         ),

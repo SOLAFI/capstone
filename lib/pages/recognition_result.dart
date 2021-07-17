@@ -1,5 +1,9 @@
+import 'dart:async';
+
 import 'package:capstone/widgets/text.dart';
 import 'package:flutter/material.dart';
+import 'package:animated_widgets/animated_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class PredictionResultPage extends StatefulWidget{
   PredictionResultPage({Key? key, required this.postResponse}) : super(key: key);
@@ -11,6 +15,10 @@ class PredictionResultPage extends StatefulWidget{
 }
 
 class _PredictionResultPageState extends State<PredictionResultPage> {
+
+  // Controller
+  TextEditingController _issueController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +37,7 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
     String genusName = result['taxonomy']['genus_name'];
     String speciesName = result['taxonomy']['species_name'];
 
+    Color reportIssueColor = Colors.grey;
 
     return Card(
       shape: RoundedRectangleBorder(
@@ -56,6 +65,35 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                     ),
                     child: Image.network(imageURL),
                   ),
+                ),
+                // Feedback
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    GestureDetector(
+                      onTap: (){
+                        _reportDialog(context);
+                      },
+                      child: Row(
+                        children: [
+                          Text(
+                            'Report an issue',
+                            style: TextStyle(
+                              color: reportIssueColor,
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(5, 0, 10, 5),
+                            child: Icon(
+                              Icons.feedback,
+                              color: reportIssueColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    ThumbUpWidget(),
+                  ],
                 ),
                 // Class details
                 Padding(
@@ -100,32 +138,134 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                     ),
                   ),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text('Report an issue'),
-                    Icon(Icons.feedback),
-                    Text('Helpful?'),
-                    Icon(Icons.thumb_up),
-                  ],
-                ),
+                // Title - Summary
                 Padding(
                   padding: const EdgeInsets.only(top: 20.0),
                   child: PoppinsTitleText('Summary', 24, Colors.black, TextAlign.center),
                 ),
+                // Summary text
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
                   child: Text(summary,
                   textAlign: TextAlign.justify,),
                 ),
+                // Link to wiki
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text("\nSee full wiki page at: "+ pageURL),
+                  child: Column(
+                    children: [
+                      Text("\nSee full wiki page at:"),
+                      GestureDetector(
+                        onTap: (){
+                          _launchURL(pageURL);
+                        },
+                        child: Text(pageURL,
+                          style: TextStyle(
+                            color: Theme.of(context).primaryColor,
+                            decoration: TextDecoration.underline,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
                 )
               ],
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  void _launchURL(String url) async {
+    await canLaunch(url) ? launch(url, forceWebView: true) : throw 'Could not launch $url';
+  }
+
+
+  _reportDialog(BuildContext context) async {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text('Report an Issue'),
+          content: TextField(
+            controller: _issueController,
+            textInputAction: TextInputAction.go,
+            decoration: InputDecoration(hintText: 'Enter your feedback'),
+          ),
+          actions: [
+            RawMaterialButton(
+              child: Text('Cancel'),
+              onPressed: () => Navigator.of(context).pop()
+            ),
+            RawMaterialButton(
+              child: Text('Submit'),
+              onPressed: () => Navigator.of(context).pop()
+            ),
+          ],
+        );
+      }
+    );
+  }
+
+}
+
+class ThumbUpWidget extends StatefulWidget {
+  const ThumbUpWidget({ Key? key }) : super(key: key);
+
+  @override
+  _ThumbUpWidgetState createState() => _ThumbUpWidgetState();
+}
+
+class _ThumbUpWidgetState extends State<ThumbUpWidget> {
+
+  bool thumbUp = false;
+  bool shake = false;
+  Color activated = Colors.amber.shade700;
+  Color deactivated = Colors.orange.shade100;
+
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTap: (){
+        setState(() {
+          thumbUp = !thumbUp;
+          if (thumbUp){
+            shake = true;
+            Timer(Duration(milliseconds: 500), (){
+              setState(() {
+                shake = false;
+              });
+            });
+          }
+          else{
+            shake = false;
+          }
+        });
+      },
+      child: Row(
+        children: [
+          Text(
+            'Helpful?',
+            style: TextStyle(
+              color: thumbUp ? activated : deactivated,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(5, 0, 10, 5),
+            child: ShakeAnimatedWidget(
+              enabled: shake,
+              duration: Duration(milliseconds: 500),
+              shakeAngle: Rotation.deg(z: 30),
+              curve: Curves.easeIn,
+              child: Icon(
+                Icons.thumb_up,
+                color: thumbUp ? activated : deactivated,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

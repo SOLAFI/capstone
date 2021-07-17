@@ -31,12 +31,18 @@ dependencies:
   cupertino_icons: ^1.0.2
   google_fonts: ^2.1.0
 
+  # Animation
+  animated_widgets:
+
   # Image related
   image_picker: ^0.8.0+3
 
   # Database
   sqflite:
   path:
+
+  # Webview
+  url_launcher:
 
 dev_dependencies:
   flutter_test:

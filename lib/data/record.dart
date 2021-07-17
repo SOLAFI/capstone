@@ -1,9 +1,10 @@
-import 'dart:ffi';
+import 'dart:core';
 
 class Record {
   final int id;
   final int timestamp;
   final String imageURL;
+  final String result;
   final double longitude;
   final double latitude;
   
@@ -11,6 +12,7 @@ class Record {
     required this.id,
     required this.imageURL,
     required this.timestamp,
+    required this.result,
     required this.latitude,
     required this.longitude,
   });
@@ -20,6 +22,7 @@ class Record {
       'id': id,
       'image_url': imageURL,
       'timestamp': timestamp,
+      'result': result,
       'latitude': latitude,
       'longitude': longitude,
     };
@@ -28,10 +31,13 @@ class Record {
   @override
   String toString() {
     return '''
-      Record:
-        time: $timestamp
-        id: $id
-        image url: $imageURL}
+Record:
+  id: $id
+  time: ${DateTime.fromMillisecondsSinceEpoch(timestamp)}
+  image url: $imageURL
+  result: $result
+  latitude: $latitude
+  longtitude: $longitude
     ''';
   }
 
