@@ -56,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
   File _image = new File('none');
   final picker = ImagePicker();
   Future _selectImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null){
         _image = File(pickedFile.path);
@@ -68,7 +68,7 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Future _takePhoto() async {
-    final cameraFile = await ImagePicker().getImage(source: ImageSource.camera);
+    final cameraFile = await ImagePicker().pickImage(source: ImageSource.camera);
     setState(() {
       if (cameraFile != null){
         _image = File(cameraFile.path);

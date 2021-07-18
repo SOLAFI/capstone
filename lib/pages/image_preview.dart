@@ -100,7 +100,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   File _image = new File('none');
   final picker = ImagePicker();
   Future _selectImage() async {
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
     setState(() {
       if (pickedFile != null){
         _image = File(pickedFile.path);
