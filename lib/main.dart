@@ -1,10 +1,11 @@
 import 'package:capstone/pages/map.dart';
+import 'package:capstone/pages/user.dart';
+import 'pages/image_preview.dart';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 import "package:google_fonts/google_fonts.dart";
-
-import 'pages/image_preview.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
       home: MyHomePage(title: 'Test Home Page'),
       routes: {
         '/map': (context) => MapPage(),
+        '/user': (context) => UserPage(),
       },
     );
   }
@@ -86,17 +88,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton:
-          Column(mainAxisAlignment: MainAxisAlignment.end, children: [
-        Padding(
-          padding: EdgeInsets.only(bottom: 10),
-          child: FloatingActionButton(
-            onPressed: (){
-              Navigator.of(context).pushNamed('/map');
-            },
-            child: Icon(Icons.person),
+        Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+          Padding(
+            padding: EdgeInsets.only(bottom: 10),
+            child: FloatingActionButton(
+              onPressed: (){
+                Navigator.of(context).pushNamed('/user');
+              },
+              child: Icon(Icons.person),
+            ),
           ),
-        ),
-      ]),
+        ]
+      ),
       body: Padding(
         padding: EdgeInsets.fromLTRB(horizontalPadding, verticalPadding,
             horizontalPadding, verticalPadding),

@@ -1,11 +1,8 @@
 import 'package:capstone/data/record.dart';
-import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-import 'package:path/path.dart';
 import '../widgets/buttons.dart';
-
-//import '../data/record.dart';
 import '../utils/sqlite_handler.dart';
+
+import 'package:flutter/material.dart';
 
 class MapPage extends StatefulWidget{
   @override

@@ -81,7 +81,6 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       double latitude = 0;
       double longitude = 0;
       int timestamp = DateTime.now().millisecondsSinceEpoch;
-      print('Current number of records: $recCount');
       Record rec = new Record(
         id: recCount+1,
         timestamp: timestamp,
@@ -121,7 +120,9 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     _isRecognizing = false;
     _sendProgress = 0;
     _invalidImage = false;
+    //RecDBProvider.deleteRecDB();
     getRecordsCount();
+    print('Current number of records: $recCount');
   }
 
 
