@@ -1,0 +1,16 @@
+Target dependency graph (6 targets)
+FMDB in Pods
+Flutter in Pods
+image_picker in Pods, depends on:
+Flutter in Pods (explicit)
+sqflite in Pods, depends on:
+FMDB in Pods (explicit)
+Flutter in Pods (explicit)
+url_launcher in Pods, depends on:
+Flutter in Pods (explicit)
+Pods-Runner in Pods, depends on:
+FMDB in Pods (explicit)
+Flutter in Pods (explicit)
+image_picker in Pods (explicit)
+sqflite in Pods (explicit)
+url_launcher in Pods (explicit)

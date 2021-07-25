@@ -90,6 +90,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
         longitude: longitude,
       );
       RecDBProvider.insertRecord(rec);
+      print('Current number of records: $recCount');
     } catch (e) {
       print(e);
     }
@@ -122,7 +123,6 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     _invalidImage = false;
     //RecDBProvider.deleteRecDB();
     getRecordsCount();
-    print('Current number of records: $recCount');
   }
 
 

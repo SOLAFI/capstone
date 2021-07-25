@@ -26,9 +26,6 @@ class _UserPageState extends State<UserPage>{
   Widget build(BuildContext context) {
 
     List<Record> records = [];
-    MediaQueryData mediaQueryData = MediaQuery.of(context);
-    double mediaHeight = mediaQueryData.size.height;
-    double mediaWidth = mediaQueryData.size.width;
 
     return Scaffold(
       backgroundColor: Colors.white,

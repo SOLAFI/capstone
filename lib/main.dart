@@ -5,7 +5,9 @@ import 'pages/image_preview.dart';
 import 'package:flutter/material.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
-import "package:google_fonts/google_fonts.dart";
+import 'package:location/location.dart';
+
+import 'widgets/text.dart';
 
 void main() {
   runApp(MyApp());
@@ -24,7 +26,6 @@ class MyApp extends StatelessWidget {
       ),
       home: MyHomePage(title: 'Test Home Page'),
       routes: {
-        '/map': (context) => MapPage(),
         '/user': (context) => UserPage(),
       },
     );
@@ -52,6 +53,16 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   static const double DEFAULT_PADDING = 20;
 
+  String funFactText = '''There are around 10,000 different species of bird. They range from big to small, and are lots of different colours!
+How many different birds can you spot?''';
+
+  @override
+  void initState() {
+    super.initState();
+    _initLocationService();
+  }
+
+
     // Image picker
   File _image = new File('none');
   final picker = ImagePicker();
@@ -77,6 +88,31 @@ class _MyHomePageState extends State<MyHomePage> {
         print('No image selected');
       }
     });
+  }
+
+  Future<void> _initLocationService() async{
+    Location location = new Location();
+    bool _serviceEnabled;
+    PermissionStatus _permissionGranted;
+    LocationData _locationData;
+
+    _serviceEnabled = await location.serviceEnabled();
+    if (!_serviceEnabled) {
+      _serviceEnabled = await location.requestService();
+      if (!_serviceEnabled) {
+        print('Error when enabling service');
+      }
+    }
+
+    _permissionGranted = await location.hasPermission();
+    if (_permissionGranted == PermissionStatus.denied) {
+      _permissionGranted = await location.requestPermission();
+      if (_permissionGranted != PermissionStatus.granted) {
+        print('Error when granting permission');
+      }
+    }
+    _locationData = await location.getLocation();
+    print(_locationData);
   }
 
   @override
@@ -109,26 +145,53 @@ class _MyHomePageState extends State<MyHomePage> {
           children: <Widget>[
             // Card - fun fact
             Card(
-              color: Colors.grey[50],
+              color: Colors.white,
               shadowColor: Colors.grey,
-              elevation: 10.0,
+              elevation: 5.0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               child: SizedBox(
                 width: mediaQueryData.size.width * 0.9,
                 height: mediaQueryData.size.height * 0.2,
-                child: FittedBox(
-                  fit: BoxFit.none,
-                  child: Text(
-                    'Fun Fact',
-                    style: GoogleFonts.poppins(
-                      textStyle: TextStyle(
-                          color: Colors.grey[200],
-                          fontWeight: FontWeight.bold,
-                          fontSize: 40),
+                child: Stack(
+                  children: [
+                    Positioned(
+                      child: Image.asset('assets/images/bird.png'),
+                      right: -30,
                     ),
-                  ),
-                ),
+                    SingleChildScrollView(
+                      child: Padding(
+                        padding: const EdgeInsets.all(10.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Do you know that...',
+                              style: TextStyle(
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 20,
+                                foreground: Paint()..shader = LinearGradient(
+                                    colors: [Colors.amber.shade300, Colors.deepPurple.shade400]
+                                  ).createShader(Rect.fromLTRB(0, 0, 200, 70)),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 8.0),
+                              child: Text(
+                                funFactText,
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  color: Colors.grey.shade700,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                )
               ),
             ),
             // Buttons - image source
@@ -143,7 +206,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Card(
                       color: Colors.amber,
                       shadowColor: Colors.grey,
-                      elevation: 10.0,
+                      elevation: 5,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: SizedBox(
@@ -161,13 +224,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               bottom: 0,
                             ),
                             Positioned(
-                              child: Text('Upload\nImage',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30),
-                                  )),
+                              child: PoppinsTitleText('Upload\nImage', 30, Colors.white, TextAlign.start),
                               width: 150,
                               left: 15,
                               top: 15,
@@ -183,7 +240,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: Card(
                       color: Colors.purple[400],
                       shadowColor: Colors.grey,
-                      elevation: 10.0,
+                      elevation: 5.0,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
                       child: SizedBox(
@@ -201,13 +258,7 @@ class _MyHomePageState extends State<MyHomePage> {
                               bottom: 0,
                             ),
                             Positioned(
-                              child: Text('Take\nPhoto',
-                                  style: GoogleFonts.poppins(
-                                    textStyle: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 30),
-                                  )),
+                              child: PoppinsTitleText('Take\nPhoto', 30, Colors.white, TextAlign.start),
                               width: 150,
                               left: 15,
                               top: 15,
@@ -225,28 +276,47 @@ class _MyHomePageState extends State<MyHomePage> {
               padding: const EdgeInsets.only(top: DEFAULT_PADDING),
               child: GestureDetector(
                 onTap: (){
-                  Navigator.pushNamed(context, '/map');
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => MapPage()));
                 },
                 child: Card(
                   color: Colors.grey.shade50,
                   shadowColor: Colors.grey,
-                  elevation: 10.0,
+                  elevation: 5.0,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: SizedBox(
-                    width: mediaQueryData.size.width * 0.9,
-                    height: mediaQueryData.size.height * 0.2,
-                    child: Stack(
-                      children: [
-                        Positioned.fill(
-                          child: Icon(
-                            Icons.map_rounded,
-                            size: 150,
-                            color: Colors.grey[200],
+                  child: Stack(
+                    children: [
+                      SizedBox(
+                        width: mediaQueryData.size.width * 0.9,
+                        height: mediaQueryData.size.height * 0.2,
+                        child: Image.asset(
+                          'assets/images/map.jpeg',
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      SizedBox(
+                        width: mediaQueryData.size.width * 0.9,
+                        height: mediaQueryData.size.height * 0.2,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Colors.transparent,
+                                Colors.black12,
+                              ],
+                              begin: Alignment.center,
+                              end: Alignment.bottomLeft,
+                            ),
                           ),
                         ),
-                      ],
-                    ),
+                      ),
+                      Positioned(
+                        child: PoppinsTitleText('Map', 30, Colors.white, TextAlign.start),
+                        bottom: 15,
+                        left: 15,
+                      ),
+                    ],
                   ),
                 ),
               ),

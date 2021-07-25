@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import "package:google_fonts/google_fonts.dart";
 
 
 class PoppinsTitleText extends StatelessWidget {
@@ -15,12 +14,11 @@ class PoppinsTitleText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(text,
       textAlign: textAlign,
-      style: GoogleFonts.poppins(
-        textStyle: TextStyle(
-          color: color,
-          fontWeight: FontWeight.bold,
-          fontSize: fontSize,
-        ),
+      style: TextStyle(
+        fontFamily: 'Poppins',
+        color: color,
+        fontWeight: FontWeight.w700,
+        fontSize: fontSize,
       ),
     );
   }

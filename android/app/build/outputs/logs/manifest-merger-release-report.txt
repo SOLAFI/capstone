@@ -1,0 +1,330 @@
+-- Merging decision tree log ---
+manifest
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:2:1-18:12
+MERGED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:2:1-19:12
+MERGED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:2:1-14:12
+MERGED from [:amap_flutter_map] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/amap_flutter_map/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
+MERGED from [:flutter_plugin_android_lifecycle] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
+MERGED from [:sqflite] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/sqflite/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
+MERGED from [:amap_flutter_location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/amap_flutter_location/intermediates/library_manifest/release/AndroidManifest.xml:2:1-7:12
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/6f5cc35585cc790e0386639df7baff21/jetified-play-services-location-16.0.0/AndroidManifest.xml:2:1-9:12
+MERGED from [androidx.core:core-ktx:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/9e616e3db101c792001b6b2e73e1b52f/jetified-core-ktx-1.3.2/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:17:1-29:12
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/60a5f2d611abff1bdb9152290508ab48/jetified-play-services-places-placereport-16.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/78799c9c2fce972ab595a76b7cd05675/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:2:1-9:12
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/54502f911ac2ab787588cf81d55ef35c/jetified-play-services-basement-16.0.1/AndroidManifest.xml:17:1-28:12
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2d1ee8b369a3512a36e6061d2ed872cf/legacy-support-v4-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2fd9120a6da4df3dbabdd40f6a2d8995/fragment-1.1.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b69d809a7d56669e263a6dd73fa3f3e0/legacy-support-core-ui-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/eb26273f8f7192460456ce62b9bdf9ef/viewpager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/fead7ea2e43546ae73f7f9d07ac64f5f/legacy-support-core-utils-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.loader:loader:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/d9536c14ffde0b7289f12ba6def6bfa4/loader-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.activity:activity:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/68dbf8ea01a1dbd974fc87b5753550f0/jetified-activity-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.media:media:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c6d01c8c444ebd60070e8fd3602db39e/media-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c55ef91c26d4308e6afaf93e553ef302/coordinatorlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/a71638e40cbd9c9c6e5d2d7449ca53dd/drawerlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/6e82373554eac6f416a47581a6cf4f62/slidingpanelayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.customview:customview:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/bc28a09d8d2212ffd5788fe6c1853326/customview-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/bb361c9951ec30a475ef40f80e89b874/swiperefreshlayout-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/57910a85af155c3103487e39ce23f678/asynclayoutinflater-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.core:core:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/22596e141ed939448a45bb52248db646/core-1.3.2/AndroidManifest.xml:17:1-26:12
+MERGED from [androidx.exifinterface:exifinterface:1.3.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/699f67f2d72ad9902250b3e1c41f0647/exifinterface-1.3.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/ca6b214160bd0909b103aa12202ef51c/lifecycle-runtime-2.2.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2271d874344878e62b9a8e309af0c39d/jetified-savedstate-1.0.0/AndroidManifest.xml:17:1-24:12
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/fb333fb43575d8a3b51161295454427f/lifecycle-livedata-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/cad25976877a6ae855ef6821534f58a1/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/96aee308bccd03bc62c306516c23a410/versionedparcelable-1.1.0/AndroidManifest.xml:17:1-27:12
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/5f606c30f064eed94124828de37fadc0/core-runtime-2.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/15792e6083b2b5b5a7ffa285d47daa24/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/15ddec56bd001fb2d4fc04a7d71346e8/documentfile-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b6c34301107cd06a29fdce8c3ef58e3a/localbroadcastmanager-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.print:print:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/f15d67ff15ac844b69200ea1a0376a7a/print-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b962778313a0e23f9ca3dbafc012c1af/interpolator-1.0.0/AndroidManifest.xml:17:1-22:12
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c39070be4a8b092ae5970162a829e305/cursoradapter-1.0.0/AndroidManifest.xml:17:1-22:12
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+	package
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:2:5-35
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+	android:versionName
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+	android:versionCode
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:1-64:12
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+	xmlns:android
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:1:11-69
+application
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:3:4-41:19
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:10:5-16:19
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:10:5-16:19
+MERGED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:7:5-17:19
+MERGED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:7:5-17:19
+MERGED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:7:5-12:19
+MERGED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:7:5-12:19
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/6f5cc35585cc790e0386639df7baff21/jetified-play-services-location-16.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/6f5cc35585cc790e0386639df7baff21/jetified-play-services-location-16.0.0/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:22:5-27:19
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/60a5f2d611abff1bdb9152290508ab48/jetified-play-services-places-placereport-16.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/60a5f2d611abff1bdb9152290508ab48/jetified-play-services-places-placereport-16.0.0/AndroidManifest.xml:22:5-20
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/78799c9c2fce972ab595a76b7cd05675/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/78799c9c2fce972ab595a76b7cd05675/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:7:5-20
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/54502f911ac2ab787588cf81d55ef35c/jetified-play-services-basement-16.0.1/AndroidManifest.xml:22:5-26:19
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/54502f911ac2ab787588cf81d55ef35c/jetified-play-services-basement-16.0.1/AndroidManifest.xml:22:5-26:19
+MERGED from [androidx.core:core:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/22596e141ed939448a45bb52248db646/core-1.3.2/AndroidManifest.xml:24:5-89
+MERGED from [androidx.core:core:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/22596e141ed939448a45bb52248db646/core-1.3.2/AndroidManifest.xml:24:5-89
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/96aee308bccd03bc62c306516c23a410/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/96aee308bccd03bc62c306516c23a410/versionedparcelable-1.1.0/AndroidManifest.xml:24:5-25:19
+	android:appComponentFactory
+		ADDED from [androidx.core:core:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/22596e141ed939448a45bb52248db646/core-1.3.2/AndroidManifest.xml:24:18-86
+	android:label
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:4:9-30
+	android:icon
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:5:9-43
+activity#com.example.capstone.MainActivity
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:6:9-34:20
+	android:launchMode
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:8:13-43
+	android:hardwareAccelerated
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:11:13-47
+	android:windowSoftInputMode
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:12:13-55
+	android:configChanges
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:10:13-163
+	android:theme
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:9:13-47
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:7:13-41
+meta-data#io.flutter.embedding.android.NormalTheme
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:17:13-20:17
+	android:resource
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:19:15-52
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:18:15-70
+meta-data#io.flutter.embedding.android.SplashScreenDrawable
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:26:13-29:17
+	android:resource
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:28:15-61
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:27:15-79
+intent-filter#action:name:android.intent.action.MAIN+category:name:android.intent.category.LAUNCHER
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:30:13-33:29
+action#android.intent.action.MAIN
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:31:17-68
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:31:25-66
+category#android.intent.category.LAUNCHER
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:32:17-76
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:32:27-74
+meta-data#flutterEmbedding
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:38:9-40:33
+	android:value
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:40:13-30
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:39:13-44
+uses-permission#android.permission.INTERNET
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:43:5-67
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:43:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:44:5-79
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:44:22-76
+uses-permission#android.permission.ACCESS_WIFI_STATE
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:45:5-76
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:45:22-73
+uses-permission#android.permission.CAMERA
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:46:5-65
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:46:22-62
+uses-permission#android.permission.FOREGROUND_SERVICE
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:47:5-77
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:47:22-74
+uses-permission#android.permission.ACCESS_BACKGROUND_LOCATION
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:48:5-84
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:48:22-82
+uses-permission#android.permission.ACCESS_COARSE_LOCATION
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:50:5-81
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:7:5-81
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:7:5-81
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:50:22-78
+uses-permission#android.permission.ACCESS_FINE_LOCATION
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:52:5-79
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:8:5-79
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:8:5-79
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:52:22-76
+uses-permission#android.permission.ACCESS_LOCATION_EXTRA_COMMANDS
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:54:5-89
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:54:22-86
+queries
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:56:5-62:15
+intent#action:name:android.intent.action.VIEW+data:scheme:https
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:58:7-61:16
+action#android.intent.action.VIEW
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:59:11-63
+	android:name
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:59:19-60
+data
+ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:60:11-42
+	android:scheme
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml:60:17-39
+uses-sdk
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:amap_flutter_map] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/amap_flutter_map/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:amap_flutter_map] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/amap_flutter_map/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:flutter_plugin_android_lifecycle] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/flutter_plugin_android_lifecycle/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/sqflite/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:sqflite] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/sqflite/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:amap_flutter_location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/amap_flutter_location/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [:amap_flutter_location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/amap_flutter_location/intermediates/library_manifest/release/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/6f5cc35585cc790e0386639df7baff21/jetified-play-services-location-16.0.0/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-location:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/6f5cc35585cc790e0386639df7baff21/jetified-play-services-location-16.0.0/AndroidManifest.xml:5:5-44
+MERGED from [androidx.core:core-ktx:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/9e616e3db101c792001b6b2e73e1b52f/jetified-core-ktx-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [androidx.core:core-ktx:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/9e616e3db101c792001b6b2e73e1b52f/jetified-core-ktx-1.3.2/AndroidManifest.xml:5:5-7:41
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/60a5f2d611abff1bdb9152290508ab48/jetified-play-services-places-placereport-16.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-places-placereport:16.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/60a5f2d611abff1bdb9152290508ab48/jetified-play-services-places-placereport-16.0.0/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/78799c9c2fce972ab595a76b7cd05675/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-tasks:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/78799c9c2fce972ab595a76b7cd05675/jetified-play-services-tasks-16.0.1/AndroidManifest.xml:5:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/54502f911ac2ab787588cf81d55ef35c/jetified-play-services-basement-16.0.1/AndroidManifest.xml:20:5-44
+MERGED from [com.google.android.gms:play-services-basement:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/54502f911ac2ab787588cf81d55ef35c/jetified-play-services-basement-16.0.1/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2d1ee8b369a3512a36e6061d2ed872cf/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-v4:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2d1ee8b369a3512a36e6061d2ed872cf/legacy-support-v4-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2fd9120a6da4df3dbabdd40f6a2d8995/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.fragment:fragment:1.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2fd9120a6da4df3dbabdd40f6a2d8995/fragment-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b69d809a7d56669e263a6dd73fa3f3e0/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-ui:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b69d809a7d56669e263a6dd73fa3f3e0/legacy-support-core-ui-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/eb26273f8f7192460456ce62b9bdf9ef/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.viewpager:viewpager:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/eb26273f8f7192460456ce62b9bdf9ef/viewpager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/fead7ea2e43546ae73f7f9d07ac64f5f/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.legacy:legacy-support-core-utils:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/fead7ea2e43546ae73f7f9d07ac64f5f/legacy-support-core-utils-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/d9536c14ffde0b7289f12ba6def6bfa4/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.loader:loader:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/d9536c14ffde0b7289f12ba6def6bfa4/loader-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.activity:activity:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/68dbf8ea01a1dbd974fc87b5753550f0/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.activity:activity:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/68dbf8ea01a1dbd974fc87b5753550f0/jetified-activity-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.media:media:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c6d01c8c444ebd60070e8fd3602db39e/media-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.media:media:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c6d01c8c444ebd60070e8fd3602db39e/media-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c55ef91c26d4308e6afaf93e553ef302/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.coordinatorlayout:coordinatorlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c55ef91c26d4308e6afaf93e553ef302/coordinatorlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/a71638e40cbd9c9c6e5d2d7449ca53dd/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.drawerlayout:drawerlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/a71638e40cbd9c9c6e5d2d7449ca53dd/drawerlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/6e82373554eac6f416a47581a6cf4f62/slidingpanelayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.slidingpanelayout:slidingpanelayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/6e82373554eac6f416a47581a6cf4f62/slidingpanelayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/bc28a09d8d2212ffd5788fe6c1853326/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.customview:customview:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/bc28a09d8d2212ffd5788fe6c1853326/customview-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/bb361c9951ec30a475ef40f80e89b874/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.swiperefreshlayout:swiperefreshlayout:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/bb361c9951ec30a475ef40f80e89b874/swiperefreshlayout-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/57910a85af155c3103487e39ce23f678/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.asynclayoutinflater:asynclayoutinflater:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/57910a85af155c3103487e39ce23f678/asynclayoutinflater-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/22596e141ed939448a45bb52248db646/core-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.core:core:1.3.2] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/22596e141ed939448a45bb52248db646/core-1.3.2/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/699f67f2d72ad9902250b3e1c41f0647/exifinterface-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.exifinterface:exifinterface:1.3.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/699f67f2d72ad9902250b3e1c41f0647/exifinterface-1.3.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/ca6b214160bd0909b103aa12202ef51c/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-runtime:2.2.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/ca6b214160bd0909b103aa12202ef51c/lifecycle-runtime-2.2.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2271d874344878e62b9a8e309af0c39d/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.savedstate:savedstate:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/2271d874344878e62b9a8e309af0c39d/jetified-savedstate-1.0.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/fb333fb43575d8a3b51161295454427f/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/fb333fb43575d8a3b51161295454427f/lifecycle-livedata-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/cad25976877a6ae855ef6821534f58a1/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-livedata-core:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/cad25976877a6ae855ef6821534f58a1/lifecycle-livedata-core-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/96aee308bccd03bc62c306516c23a410/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.versionedparcelable:versionedparcelable:1.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/96aee308bccd03bc62c306516c23a410/versionedparcelable-1.1.0/AndroidManifest.xml:20:5-22:41
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/5f606c30f064eed94124828de37fadc0/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.arch.core:core-runtime:2.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/5f606c30f064eed94124828de37fadc0/core-runtime-2.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/15792e6083b2b5b5a7ffa285d47daa24/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.lifecycle:lifecycle-viewmodel:2.1.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/15792e6083b2b5b5a7ffa285d47daa24/lifecycle-viewmodel-2.1.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/15ddec56bd001fb2d4fc04a7d71346e8/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.documentfile:documentfile:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/15ddec56bd001fb2d4fc04a7d71346e8/documentfile-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b6c34301107cd06a29fdce8c3ef58e3a/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.localbroadcastmanager:localbroadcastmanager:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b6c34301107cd06a29fdce8c3ef58e3a/localbroadcastmanager-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/f15d67ff15ac844b69200ea1a0376a7a/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.print:print:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/f15d67ff15ac844b69200ea1a0376a7a/print-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b962778313a0e23f9ca3dbafc012c1af/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.interpolator:interpolator:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/b962778313a0e23f9ca3dbafc012c1af/interpolator-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c39070be4a8b092ae5970162a829e305/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+MERGED from [androidx.cursoradapter:cursoradapter:1.0.0] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/c39070be4a8b092ae5970162a829e305/cursoradapter-1.0.0/AndroidManifest.xml:20:5-44
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+	android:targetSdkVersion
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+	android:minSdkVersion
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+		ADDED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+		INJECTED from /Users/zhaoxue/Desktop/Capstone/Project/capstone/android/app/src/main/AndroidManifest.xml
+service#com.lyokone.location.FlutterLocationService
+ADDED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:11:9-15:56
+	android:enabled
+		ADDED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:13:13-35
+	android:exported
+		ADDED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:14:13-37
+	android:foregroundServiceType
+		ADDED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:15:13-53
+	android:name
+		ADDED from [:location] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/location/intermediates/library_manifest/release/AndroidManifest.xml:12:13-71
+provider#io.flutter.plugins.imagepicker.ImagePickerFileProvider
+ADDED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:8:9-16:20
+	android:grantUriPermissions
+		ADDED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:12:13-47
+	android:authorities
+		ADDED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:10:13-74
+	android:exported
+		ADDED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:11:13-37
+	android:name
+		ADDED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:9:13-82
+meta-data#android.support.FILE_PROVIDER_PATHS
+ADDED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:13:13-15:75
+	android:resource
+		ADDED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:15:17-72
+	android:name
+		ADDED from [:image_picker] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/image_picker/intermediates/library_manifest/release/AndroidManifest.xml:14:17-67
+activity#io.flutter.plugins.urllauncher.WebViewActivity
+ADDED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:8:9-11:74
+	android:exported
+		ADDED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:10:13-37
+	android:theme
+		ADDED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:11:13-71
+	android:name
+		ADDED from [:url_launcher] /Users/zhaoxue/Desktop/Capstone/Project/capstone/build/url_launcher/intermediates/library_manifest/release/AndroidManifest.xml:9:13-74
+activity#com.google.android.gms.common.api.GoogleApiActivity
+ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:23:9-26:75
+	android:exported
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:25:13-37
+	android:theme
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:26:13-72
+	android:name
+		ADDED from [com.google.android.gms:play-services-base:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/86983dbb64d76b92d3178b04cdaf2660/jetified-play-services-base-16.0.1/AndroidManifest.xml:24:13-79
+meta-data#com.google.android.gms.version
+ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/54502f911ac2ab787588cf81d55ef35c/jetified-play-services-basement-16.0.1/AndroidManifest.xml:23:9-25:69
+	android:value
+		ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/54502f911ac2ab787588cf81d55ef35c/jetified-play-services-basement-16.0.1/AndroidManifest.xml:25:13-66
+	android:name
+		ADDED from [com.google.android.gms:play-services-basement:16.0.1] /Users/zhaoxue/.gradle/caches/transforms-2/files-2.1/54502f911ac2ab787588cf81d55ef35c/jetified-play-services-basement-16.0.1/AndroidManifest.xml:24:13-58
