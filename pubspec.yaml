@@ -45,8 +45,7 @@ dependencies:
   
   # Location
   location: ^4.2.0
-  amap_flutter_location: ^1.0.0
-  amap_flutter_map: ^2.0.1
+  flutter_map: ^0.13.1
 
 dev_dependencies:
   flutter_test:
