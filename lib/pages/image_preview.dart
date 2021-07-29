@@ -135,7 +135,6 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   void initState() {
     super.initState();
     _image = widget.image;
-    //RecDBProvider.deleteRecDB();
     getRecordsCount();
   }
 

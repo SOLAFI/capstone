@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:capstone/data/record.dart';
 import 'package:capstone/utils/sqlite_handler.dart';
 import 'package:flutter_map/flutter_map.dart';
@@ -5,8 +7,8 @@ import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import '../widgets/buttons.dart';
-
 import 'package:flutter/material.dart';
+import 'package:speech_bubble/speech_bubble.dart';
 
 class MapPage extends StatefulWidget{
 
@@ -18,10 +20,26 @@ class MapPage extends StatefulWidget{
 
 class _MapPageState extends State<MapPage>{
 
+  List<Marker> markers = [];
+
 
   @override
   void initState() {
     super.initState();
+    getRecords().then((records){
+      if(records.length!=0){
+        for(int i=0; i<records.length; i++){
+          Marker marker = imageMarker(records[i].latitude, records[i].latitude,
+            Image.file(File(records[i].imageURL), width: 28, height: 28, fit: BoxFit.cover,)
+          );
+          markers.add(marker);
+        }
+      }
+      else{
+        print('MAP: no records to display');
+      }
+      
+    });
   }
 
   Future<LocationData> _getMyLocation() async{
@@ -32,7 +50,6 @@ class _MapPageState extends State<MapPage>{
 
   @override
   Widget build(BuildContext context) {
-    List<Record> records = [];
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -45,13 +62,23 @@ class _MapPageState extends State<MapPage>{
               return Text('error');
             }
             if(snapshot.hasData){
+              Marker currentLocation = Marker(
+                width: 30,
+                height: 30,
+                point: LatLng(snapshot.data.latitude, snapshot.data.longitude),
+                builder: (ctx) =>
+                Container(
+                  child: Icon(Icons.pin_drop, color: Colors.amber.shade600, size: 30,),
+                ),
+              );
+              markers.add(currentLocation);
               return FlutterMap(
                         options: MapOptions(
                           center: LatLng(
                             snapshot.data.latitude,
                             snapshot.data.longitude,
                           ),
-                          zoom: 13,
+                          zoom: 15,
                         ),
                         layers: [
                           TileLayerOptions(
@@ -59,59 +86,10 @@ class _MapPageState extends State<MapPage>{
                             subdomains: ['a', 'b', 'c']
                           ),
                           MarkerLayerOptions(
-                            markers: [
-                              Marker(
-                                width: 80.0,
-                                height: 80.0,
-                                point: LatLng(snapshot.data.latitude, snapshot.data.longitude),
-                                builder: (ctx) =>
-                                Container(
-                                  child: 
-                                      Icon(Icons.pin_drop,size: 30,color: Colors.deepPurple,),
-                                ),
-                              ),
-                            ],
+                            markers: markers,
                           )
                         ],
                       );
-              // return Container(
-              //   height: 500,
-              //   child: Column(
-              //     mainAxisAlignment: MainAxisAlignment.center,
-              //     children: [
-              //       SizedBox(
-              //         width: MediaQuery.of(context).size.width,
-              //         height: 50,
-              //         child: Text(snapshot.data.toString())
-              //       ),
-              //       Container(
-              //         height: 200,
-              //         width: MediaQuery.of(context).size.width,
-              //         child: FutureBuilder(
-              //           future: getRecords(),
-              //           builder:(context, AsyncSnapshot<List<Record>> snapshot) {
-              //             if (snapshot.hasData){
-              //               records = snapshot.data as List<Record>;
-              //               return ListView.builder(
-              //                 itemCount: records.length,
-              //                 itemBuilder: (context, index){
-              //                   return Card(
-              //                     child: ListTile(
-              //                       title: Text(records[index].toString()),
-              //                     ),
-              //                   );
-              //                 }
-              //               );
-              //             }
-              //             else {
-              //               return Center(child: Text('No record found'));
-              //             }
-              //           },
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // );
             }
             return Text('Loading...');
           },
@@ -123,6 +101,32 @@ class _MapPageState extends State<MapPage>{
   Future<List<Record>> getRecords() async {
     return RecDBProvider.records();
   }
-}
 
+  Marker imageMarker(double lat, double lng, Image image){
+    return Marker(
+      height: 80,
+      width: 50,
+      point: LatLng(lat, lng),
+      builder: (ctx) =>
+      Stack(
+        children:[ 
+          Positioned(
+            top: 0,
+            left: 0,
+            child: SpeechBubble(
+              nipLocation: NipLocation.BOTTOM,
+              nipHeight: 10,
+              color: Colors.deepPurple,
+              child: Container(
+                height: 30,
+                width: 30,
+                child: image,
+              ),
+            ),
+          ),
+        ]
+      ),
+    );
+  }
+}
 

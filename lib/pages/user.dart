@@ -34,6 +34,10 @@ class _UserPageState extends State<UserPage>{
         future: getRecords(),
         builder:(context, AsyncSnapshot<List<Record>> snapshot) {
           if (snapshot.hasData){
+            List list = snapshot.data!;
+            if (list.length==0){
+              return Center(child: Text('No record found'));
+            }
             records = snapshot.data as List<Record>;
             return GridView.builder(
               itemCount: records.length,
@@ -45,7 +49,6 @@ class _UserPageState extends State<UserPage>{
               itemBuilder: (context, index){
                 Map rec = records[index].toMap();
                 return Card(
-                  
                   child: Stack(
                     children: [
                       
@@ -74,7 +77,7 @@ class _UserPageState extends State<UserPage>{
             );
           }
           else {
-            return Center(child: Text('No record found'));
+            return Center(child: Text('Loading...'));
           }
         },
       ),

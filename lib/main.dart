@@ -1,5 +1,6 @@
 import 'package:capstone/pages/map.dart';
 import 'package:capstone/pages/user.dart';
+import 'package:capstone/utils/sqlite_handler.dart';
 import 'pages/image_preview.dart';
 
 import 'package:flutter/material.dart';
@@ -60,6 +61,8 @@ How many different birds can you spot?''';
   void initState() {
     super.initState();
     _initLocationService();
+    RecDBProvider.deleteRecDB();
+    RecDBProvider.recordsCount().then((value) => print('Number of records: $value'));
   }
 
 
