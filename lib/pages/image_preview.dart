@@ -8,6 +8,7 @@ import 'dart:convert';
 
 import 'package:capstone/utils/sqlite_handler.dart';
 import 'package:capstone/pages/recognition_result.dart';
+import 'package:location/location.dart';
 import '../widgets/buttons.dart';
 import '../widgets/text.dart';
 import '../data/record.dart';
@@ -29,8 +30,16 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
 
   bool _isRecognizing = false;
   double _sendProgress = 0;
-  bool _invalidImage = false;
   int recCount = 0;
+  String errorMessage = '';
+
+  void reset() {
+    setState((){
+      _isRecognizing = false;
+      _sendProgress = 0;
+      errorMessage = '';
+    });
+  }
 
 
   Future<void> getRecordsCount() async{
@@ -49,51 +58,60 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       "file": await MultipartFile.fromFile(_image.path, filename: _image.path.split('/').last),
     });
 
-    try {
-      var response = await Dio().post(
-        "http://172.16.13.81:5000/recognize",
-        data: formData,
-        onSendProgress: (int current, int total) {setState(() {
-          _sendProgress = current/total;
-        });}
-      );
-      setState(() {
-        _isRecognizing = false;
-        _sendProgress = 0;
-      });
-      // print(response.toString());
+    Dio().post(
+      "http://172.16.13.81:5000/recognize",
+      data: formData,
+      onSendProgress: (int current, int total) {setState(() {
+        _sendProgress = current/total;
+      });}
+    ).then((response){
       String result = '';
-      if(response.toString()=="invalid image"){
-        _isRecognizing = true;  // Only to disable the recognize button, not really recognizing
-        _invalidImage = true;
-        result = response.toString();
-      }
-      else{
-        postResponse = JsonCodec().decode(response.toString());
-        showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse));
-        result = postResponse['class_name'];
-      }
+      reset();
+      setState(() {
+        // print(response.toString());
+        if(response.toString()=="invalid image"){
+          _isRecognizing = true;  // Only to disable the recognize button, not really recognizing
+          errorMessage = 'Recognition failed :(\nIs this an image of a bird?';
+          result = response.toString();
+        }
+        else{
+          postResponse = JsonCodec().decode(response.toString());
+          showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse));
+          result = postResponse['class_name'];
+        }
+      });
       /*
           Insert a record to SQLite DB
-       */
+        */
       RecDBProvider.initDatabase();
       String uploadedImage = _image.path;
-      double latitude = 0;
-      double longitude = 0;
       int timestamp = DateTime.now().millisecondsSinceEpoch;
-      Record rec = new Record(
-        id: recCount+1,
-        timestamp: timestamp,
-        imageURL: uploadedImage,
-        result: result,
-        latitude: latitude,
-        longitude: longitude,
-      );
-      RecDBProvider.insertRecord(rec);
-      print('Current number of records: $recCount');
-    } catch (e) {
-      print(e);
-    }
+      Location location = new Location();
+      location.getLocation().then((locationData){
+        Record rec = new Record(
+          id: recCount+1,
+          timestamp: timestamp,
+          imageURL: uploadedImage,
+          result: result,
+          latitude: locationData.latitude!,
+          longitude: locationData.longitude!,
+        );
+        RecDBProvider.insertRecord(rec);
+        print('Current number of records: $recCount');
+      });
+    }).catchError((e){
+      if(e.runtimeType.toString() == 'DioError'){
+        setState(() {
+          errorMessage = 'Network Error';
+        });
+      }
+      else {
+        setState(() {
+          errorMessage = e.toString();
+        });
+      }
+    });
+    
   }
 
 
@@ -105,8 +123,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     setState(() {
       if (pickedFile != null){
         _image = File(pickedFile.path);
-        _isRecognizing = false;
-        _invalidImage = false;
+        reset();
       } else {
         print('No image selected');
       }
@@ -118,9 +135,6 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   void initState() {
     super.initState();
     _image = widget.image;
-    _isRecognizing = false;
-    _sendProgress = 0;
-    _invalidImage = false;
     //RecDBProvider.deleteRecDB();
     getRecordsCount();
   }
@@ -194,11 +208,9 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                     padding: EdgeInsets.all(5),
                     child: IconButton(
                       onPressed: () { 
+                        reset();
                         setState(() {
                           _image = File('none');
-                          _isRecognizing = false;
-                          _sendProgress = 0;
-                          _invalidImage = false;
                         }); 
                       },
                       icon: Icon(
@@ -261,11 +273,10 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                   )
                 ],
               ) : Container(),
-              _invalidImage?
-              Text('Recognition failed :(\nIs this an image of a bird?',
+              Text(errorMessage,
               style: TextStyle(color: Colors.red),
               textAlign: TextAlign.center,
-              ):Container()
+              ),
             ],
           ),
         ),
