@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:capstone/data/record.dart';
 import 'package:capstone/utils/sqlite_handler.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
 import 'package:latlong2/latlong.dart';
@@ -29,16 +30,20 @@ class _MapPageState extends State<MapPage>{
     getRecords().then((records){
       if(records.length!=0){
         for(int i=0; i<records.length; i++){
-          Marker marker = imageMarker(records[i].latitude, records[i].latitude,
-            Image.file(File(records[i].imageURL), width: 28, height: 28, fit: BoxFit.cover,)
-          );
-          markers.add(marker);
+          if (records[i].latitude!=0 && records[i].longitude!=0) {
+            Marker marker = imageMarker(records[i].latitude, records[i].latitude,
+              Image.file(File(records[i].imageURL), width: 28, height: 28, fit: BoxFit.cover,)
+            );
+            markers.add(marker);
+          }
+        }
+        if (markers.length==0){
+          print('Records: no valid record');
         }
       }
       else{
         print('MAP: no records to display');
       }
-      
     });
   }
 
@@ -63,12 +68,16 @@ class _MapPageState extends State<MapPage>{
             }
             if(snapshot.hasData){
               Marker currentLocation = Marker(
-                width: 30,
-                height: 30,
+                width: 40,
+                height: 80,
                 point: LatLng(snapshot.data.latitude, snapshot.data.longitude),
                 builder: (ctx) =>
                 Container(
-                  child: Icon(Icons.pin_drop, color: Colors.amber.shade600, size: 30,),
+                  child: Image.asset(
+                    'assets/images/icons/pin.png',
+                    width: 40,
+                    height: 80,
+                  ),
                 ),
               );
               markers.add(currentLocation);
@@ -78,7 +87,8 @@ class _MapPageState extends State<MapPage>{
                             snapshot.data.latitude,
                             snapshot.data.longitude,
                           ),
-                          zoom: 15,
+                          zoom: 14,
+                          maxZoom: 18,
                         ),
                         layers: [
                           TileLayerOptions(
@@ -91,7 +101,17 @@ class _MapPageState extends State<MapPage>{
                         ],
                       );
             }
-            return Text('Loading...');
+            return SizedBox(
+              height: 150,
+              width: 150,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  CupertinoActivityIndicator(radius: 40,),
+                  Text('Map loading...'),
+                ],
+              )
+            );
           },
         ),
       ),
@@ -116,7 +136,7 @@ class _MapPageState extends State<MapPage>{
             child: SpeechBubble(
               nipLocation: NipLocation.BOTTOM,
               nipHeight: 10,
-              color: Colors.deepPurple,
+              color: Colors.deepPurple.shade200,
               child: Container(
                 height: 30,
                 width: 30,

@@ -61,7 +61,7 @@ How many different birds can you spot?''';
   void initState() {
     super.initState();
     _initLocationService();
-    RecDBProvider.deleteRecDB();
+    // RecDBProvider.deleteRecDB();
     RecDBProvider.recordsCount().then((value) => print('Number of records: $value'));
   }
 
