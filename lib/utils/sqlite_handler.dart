@@ -84,7 +84,7 @@ class RecDBProvider {
   }
 
   // Update a record with a Record Object
-  Future<void> updateRecord (Record rec) async{
+  static Future<void> updateRecord (Record rec) async{
     final db = await initDatabase();
     await db.update('records',
       rec.toMap(),
@@ -94,7 +94,7 @@ class RecDBProvider {
   }
 
   // Get a record by ID
-  Future<Record> getRecordByID(int id) async{
+  static Future<Record> getRecordByID(int id) async{
     final db = await initDatabase();
     List<Map> maps = await db.query('records',
       columns: null,

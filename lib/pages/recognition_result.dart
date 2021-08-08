@@ -1,14 +1,16 @@
 import 'dart:async';
 
+import 'package:capstone/pages/select_location.dart';
 import 'package:capstone/widgets/text.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class PredictionResultPage extends StatefulWidget{
-  PredictionResultPage({Key? key, required this.postResponse}) : super(key: key);
+  PredictionResultPage({Key? key, required this.postResponse, required this.recordID}) : super(key: key);
 
   final Map<String, dynamic> postResponse;
+  final int recordID;
 
   @override
   _PredictionResultPageState createState() => _PredictionResultPageState();
@@ -58,12 +60,49 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                 // Wiki infobox image
                 Padding(
                   padding: const EdgeInsets.only(bottom: 10.0),
-                  child: ConstrainedBox(
-                    constraints: BoxConstraints(
-                      maxHeight: 500,
-                      maxWidth: 400,
-                    ),
-                    child: Image.network(imageURL),
+                  child: Stack(
+                    children: [
+                      ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: 500,
+                          maxWidth: 400,
+                        ),
+                        child: Image.network(imageURL),
+                      ),
+                      Positioned(
+                        right: 0,
+                        child: GestureDetector(
+                          onTap: (){
+                            Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => SelectLocationPage(recordID: widget.recordID)
+                            ));
+                          },
+                          child: Card(
+                            color: Colors.white70,
+                            elevation: 2,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Image.asset(
+                                    'assets/images/icons/pin.png',
+                                    width: 18,
+                                    height: 18,
+                                  ),
+                                  Text(
+                                    ' Pin this bird on map',
+                                    style: TextStyle(
+                                      color: Colors.deepPurple,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
                 // Feedback

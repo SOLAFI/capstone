@@ -32,6 +32,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   double _sendProgress = 0;
   int recCount = 0;
   String errorMessage = '';
+  late int recordID;
 
   void reset() {
     setState((){
@@ -76,8 +77,9 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
         }
         else{
           postResponse = JsonCodec().decode(response.toString());
-          showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse));
+          showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse, recordID: recordID,));
           result = postResponse['class_name'];
+          result = result.substring(0,result.length-1);
         }
       });
       /*
@@ -86,19 +88,17 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       RecDBProvider.initDatabase();
       String uploadedImage = _image.path;
       int timestamp = DateTime.now().millisecondsSinceEpoch;
-      Location location = new Location();
-      location.getLocation().then((locationData){
-        Record rec = new Record(
-          id: recCount+1,
-          timestamp: timestamp,
-          imageURL: uploadedImage,
-          result: result,
-          latitude: locationData.latitude!,
-          longitude: locationData.longitude!,
-        );
-        RecDBProvider.insertRecord(rec);
-        print('Current number of records: $recCount');
-      });
+      recordID = recCount+1;
+      Record rec = new Record(
+        id: recordID,
+        timestamp: timestamp,
+        imageURL: uploadedImage,
+        result: result,
+        latitude: 0,
+        longitude: 0,
+      );
+      RecDBProvider.insertRecord(rec);
+      
     }).catchError((e){
       if(e.runtimeType.toString() == 'DioError'){
         setState(() {
