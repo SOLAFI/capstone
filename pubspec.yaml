@@ -26,6 +26,7 @@ dependencies:
   
   # HTTP client library
   dio: ^4.0.0
+  http:
 
   # UI
   cupertino_icons: ^1.0.2

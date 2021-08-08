@@ -1,15 +1,19 @@
 import 'dart:async';
-
+import 'dart:convert';
+import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:capstone/pages/select_location.dart';
 import 'package:capstone/widgets/text.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
 class PredictionResultPage extends StatefulWidget{
-  PredictionResultPage({Key? key, required this.postResponse, required this.recordID}) : super(key: key);
+  PredictionResultPage({Key? key, required this.result, required this.recordID}) : super(key: key);
 
-  final Map<String, dynamic> postResponse;
+  final String result;
   final int recordID;
 
   @override
@@ -20,6 +24,47 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
 
   // Controller
   TextEditingController _issueController = TextEditingController();
+  
+  // Wiki values
+  late String summary;
+  late String imageURL;
+  late String pageURL;
+  late String orderName;
+  late String familyName;
+  late String genusName;
+  late String speciesName;
+
+  Future<String> _getWikiInfo(String className) async {
+    print(className);
+    className = className.substring(1,className.length-1);
+    print(className);
+    var response = await Dio().post(
+      "http://172.16.13.81:5000/wiki",
+      data: {
+        "class_name": className
+      },
+      options: Options(
+        headers: {
+          "connection": "keep_alive"
+        }
+      )
+    );
+    print(response.statusCode);
+    if(response.statusCode==500){
+      return 'error: 500';
+    }
+    Map wikiInfo = JsonCodec().decode(response.toString());
+    // setState(() {
+      summary = wikiInfo['summary'];
+      imageURL = wikiInfo['image_url'];
+      pageURL = wikiInfo['page_url'];
+      orderName = wikiInfo['taxonomy']['order_name'];
+      familyName = wikiInfo['taxonomy']['family_name'];
+      genusName = wikiInfo['taxonomy']['genus_name'];
+      speciesName = wikiInfo['taxonomy']['species_name'];
+    // });
+    return 'success';
+  }
 
 
   @override
@@ -29,15 +74,7 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
     double mediaHeight = mediaQueryData.size.height;
     double mediaWidth = mediaQueryData.size.width;
 
-    Map result = widget.postResponse;
-    String className = result['class_name'];
-    String summary = result['summary'];
-    String imageURL = result['image_url'];
-    String pageURL = result['page_url'];
-    String orderName = result['taxonomy']['order_name'];
-    String familyName = result['taxonomy']['family_name'];
-    String genusName = result['taxonomy']['genus_name'];
-    String speciesName = result['taxonomy']['species_name'];
+    String result = widget.result;
 
     Color reportIssueColor = Colors.grey;
 
@@ -56,158 +93,186 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                 // Title label
                 PoppinsTitleText('Result:', 20, Colors.grey, TextAlign.center),
                 // Class name
-                PoppinsTitleText(className, 28, Colors.black, TextAlign.center),
-                // Wiki infobox image
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
-                  child: Stack(
-                    children: [
-                      ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: 500,
-                          maxWidth: 400,
-                        ),
-                        child: Image.network(imageURL),
-                      ),
-                      Positioned(
-                        right: 0,
-                        child: GestureDetector(
-                          onTap: (){
-                            Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => SelectLocationPage(recordID: widget.recordID)
-                            ));
-                          },
-                          child: Card(
-                            color: Colors.white70,
-                            elevation: 2,
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
+                PoppinsTitleText(result, 28, Colors.black, TextAlign.center),
+                // From Wiki
+                FutureBuilder(
+                  future: _getWikiInfo(result),
+                  builder: (context, snapshot){
+                    if (snapshot.hasData){
+                      if(snapshot.data.toString() == 'success'){
+                        return Column(
+                          children: [
+                            // Wiki infobox image
+                            Padding(
+                              padding: const EdgeInsets.only(bottom: 10.0),
+                              child: Stack(
                                 children: [
-                                  Image.asset(
-                                    'assets/images/icons/pin.png',
-                                    width: 18,
-                                    height: 18,
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxHeight: 500,
+                                      maxWidth: 400,
+                                    ),
+                                    child: Image.network(imageURL),
                                   ),
-                                  Text(
-                                    ' Pin this bird on map',
-                                    style: TextStyle(
-                                      color: Colors.deepPurple,
+                                  Positioned(
+                                    right: 0,
+                                    child: GestureDetector(
+                                      onTap: (){
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                          builder: (context) => SelectLocationPage(recordID: widget.recordID)
+                                        ));
+                                      },
+                                      child: Card(
+                                        color: Colors.white70,
+                                        elevation: 2,
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Image.asset(
+                                                'assets/images/icons/pin.png',
+                                                width: 18,
+                                                height: 18,
+                                              ),
+                                              Text(
+                                                ' Pin this bird on map',
+                                                style: TextStyle(
+                                                  color: Colors.deepPurple,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // Feedback
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    GestureDetector(
-                      onTap: (){
-                        _reportDialog(context);
-                      },
-                      child: Row(
-                        children: [
-                          Text(
-                            'Report an issue',
-                            style: TextStyle(
-                              color: reportIssueColor,
+                            // Feedback
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                GestureDetector(
+                                  onTap: (){
+                                    _reportDialog(context);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Text(
+                                        'Report an issue',
+                                        style: TextStyle(
+                                          color: reportIssueColor,
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(5, 0, 10, 5),
+                                        child: Icon(
+                                          Icons.feedback,
+                                          color: reportIssueColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                ThumbUpWidget(),
+                              ],
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 10, 5),
-                            child: Icon(
-                              Icons.feedback,
-                              color: reportIssueColor,
+                            // Class details
+                            Padding(
+                              padding: const EdgeInsets.only(top:8.0),
+                              child: Card(
+                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                                elevation: 5,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(10),
+                                  child: Column(
+                                    children: [
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          PoppinsTitleText('Order: ', 16, Colors.grey.shade500, TextAlign.start),
+                                          Text(orderName)
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          PoppinsTitleText('Family: ', 16, Colors.grey.shade600, TextAlign.start),
+                                          Text(familyName)
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          PoppinsTitleText('Genus: ', 16, Colors.grey.shade700, TextAlign.start),
+                                          Text(genusName)
+                                        ],
+                                      ),
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          PoppinsTitleText('Species: ', 16, Colors.grey.shade800, TextAlign.start),
+                                          Text(speciesName)
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                    ThumbUpWidget(),
-                  ],
-                ),
-                // Class details
-                Padding(
-                  padding: const EdgeInsets.only(top:8.0),
-                  child: Card(
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                    elevation: 5,
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
+                            // Title - Summary
+                            Padding(
+                              padding: const EdgeInsets.only(top: 20.0),
+                              child: PoppinsTitleText('Summary', 24, Colors.black, TextAlign.center),
+                            ),
+                            // Summary text
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Text(summary,
+                              textAlign: TextAlign.justify,),
+                            ),
+                            // Link to wiki
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 10.0),
+                              child: Column(
+                                children: [
+                                  Text("\nSee full wiki page at:"),
+                                  GestureDetector(
+                                    onTap: (){
+                                      _launchURL(pageURL);
+                                    },
+                                    child: Text(pageURL,
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        decoration: TextDecoration.underline,
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      }
+                      else{
+                        return Text('error: get wiki failed');
+                      }
+                    }
+                    return SizedBox(
+                      height: 200,
+                      width: MediaQuery.of(context).size.width,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              PoppinsTitleText('Order: ', 16, Colors.grey.shade500, TextAlign.start),
-                              Text(orderName)
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              PoppinsTitleText('Family: ', 16, Colors.grey.shade600, TextAlign.start),
-                              Text(familyName)
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              PoppinsTitleText('Genus: ', 16, Colors.grey.shade700, TextAlign.start),
-                              Text(genusName)
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              PoppinsTitleText('Species: ', 16, Colors.grey.shade800, TextAlign.start),
-                              Text(speciesName)
-                            ],
-                          ),
+                          CupertinoActivityIndicator(radius: 35,),
+                          Text('Loading Wikipedia data...'),
                         ],
-                      ),
-                    ),
-                  ),
-                ),
-                // Title - Summary
-                Padding(
-                  padding: const EdgeInsets.only(top: 20.0),
-                  child: PoppinsTitleText('Summary', 24, Colors.black, TextAlign.center),
-                ),
-                // Summary text
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Text(summary,
-                  textAlign: TextAlign.justify,),
-                ),
-                // Link to wiki
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 10.0),
-                  child: Column(
-                    children: [
-                      Text("\nSee full wiki page at:"),
-                      GestureDetector(
-                        onTap: (){
-                          _launchURL(pageURL);
-                        },
-                        child: Text(pageURL,
-                          style: TextStyle(
-                            color: Theme.of(context).primaryColor,
-                            decoration: TextDecoration.underline,
-                          ),
-                        ),
                       )
-                    ],
-                  ),
-                )
+                    );
+                  }
+                ),
               ],
             ),
           ),

@@ -4,11 +4,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'dart:core';
 import 'dart:io';
-import 'dart:convert';
 
 import 'package:capstone/utils/sqlite_handler.dart';
 import 'package:capstone/pages/recognition_result.dart';
-import 'package:location/location.dart';
 import '../widgets/buttons.dart';
 import '../widgets/text.dart';
 import '../data/record.dart';
@@ -69,17 +67,14 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       String result = '';
       reset();
       setState(() {
-        // print(response.toString());
         if(response.toString()=="invalid image"){
           _isRecognizing = true;  // Only to disable the recognize button, not really recognizing
           errorMessage = 'Recognition failed :(\nIs this an image of a bird?';
           result = response.toString();
         }
         else{
-          postResponse = JsonCodec().decode(response.toString());
-          showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(postResponse: postResponse, recordID: recordID,));
-          result = postResponse['class_name'];
-          result = result.substring(0,result.length-1);
+          result = response.toString();
+          showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(result: result, recordID: recordID,));
         }
       });
       /*
