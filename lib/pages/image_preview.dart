@@ -58,13 +58,13 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       "file": await MultipartFile.fromFile(_image.path, filename: _image.path.split('/').last),
     });
 
-    Dio().post(
+    Dio(BaseOptions(connectTimeout: 3000)).post(
       "http://172.16.13.81:5000/recognize",
       data: formData,
       onSendProgress: (int current, int total) {setState(() {
         _sendProgress = current/total;
       });},
-    ).timeout(Duration(seconds: 30)).then((response){
+    ).then((response){
       String result = '';
       reset();
       setState(() {
@@ -99,6 +99,9 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       if(e.runtimeType.toString() == 'DioError'){
         setState(() {
           errorMessage = 'Network Error';
+          if (e.type == DioErrorType.connectTimeout){
+            errorMessage += ': cannot reach server';
+          }
         });
       }
       else {
@@ -286,6 +289,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
               style: TextStyle(color: Colors.red),
               textAlign: TextAlign.center,
               ),
+              errorMessage=='' ? Container() : IconButton(onPressed: reset, icon: Icon(Icons.refresh))
             ],
           ),
         ),
