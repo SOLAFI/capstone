@@ -17,9 +17,9 @@ class ImageProcessingProvider {
       ],
       androidUiSettings: AndroidUiSettings(
           toolbarTitle: 'Crop',
-          toolbarColor: Colors.deepPurple,
-          statusBarColor: Colors.deepPurple,
-          activeControlsWidgetColor: Colors.deepPurple,
+          toolbarColor: Colors.amber,
+          statusBarColor: Colors.amber,
+          activeControlsWidgetColor: Colors.amber,
           toolbarWidgetColor: Colors.white,
           initAspectRatio: CropAspectRatioPreset.original,
           lockAspectRatio: false),
