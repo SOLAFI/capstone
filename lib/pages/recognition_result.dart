@@ -31,11 +31,11 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
   late String familyName;
   late String genusName;
   late String speciesName;
+  bool dioError = false;
 
   String baseURL = "http://172.16.13.81:5000";
 
   Future<String> _getWikiInfo(String className) async {
-    print(className);
     className = className.substring(1,className.length-1);
     print(className);
     var response = await Dio().post(
@@ -43,16 +43,11 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
       data: {
         "class_name": className
       },
-      options: Options(
-        headers: {
-          "connection": "keep_alive"
-        }
-      )
-    );
-    print(response.statusCode);
-    if(response.statusCode==500){
-      return 'error: 500';
-    }
+    ).catchError((error){
+      setState(() {
+        dioError = true;
+      });
+    });
     Map wikiInfo = JsonCodec().decode(response.toString());
     // setState(() {
       summary = wikiInfo['summary'];
@@ -98,6 +93,9 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                 FutureBuilder(
                   future: _getWikiInfo(result),
                   builder: (context, snapshot){
+                    if (dioError){
+                      return Text('Wiki failed to load');
+                    }
                     if (snapshot.hasData){
                       if(snapshot.data.toString() == 'success'){
                         return Column(
