@@ -1,6 +1,8 @@
 import 'package:capstone/pages/map.dart';
 import 'package:capstone/pages/user.dart';
+import 'package:capstone/utils/image_processing.dart';
 import 'package:capstone/utils/sqlite_handler.dart';
+import 'package:image_cropper/image_cropper.dart';
 import 'pages/image_preview.dart';
 
 import 'package:flutter/material.dart';
@@ -71,26 +73,46 @@ How many different birds can you spot?''';
   final picker = ImagePicker();
   Future _selectImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null){
-        _image = File(pickedFile.path);
-        _pushImagePreviewPage();
-      } else {
-        print('No image selected');
+    if (pickedFile != null){
+      File? croppedFile = await ImageProcessingProvider.imageCrop(pickedFile);
+      // Cropped
+      if (croppedFile != null) {
+        setState(() {
+          _image = File(croppedFile.path);
+          _pushImagePreviewPage();
+        });
       }
-    });
+      // Not cropped
+      else{
+        print('crop canceled');
+      }
+      
+    } else {
+      print('No image selected');
+    }
   }
 
   Future _takePhoto() async {
     final cameraFile = await ImagePicker().pickImage(source: ImageSource.camera);
-    setState(() {
-      if (cameraFile != null){
-        _image = File(cameraFile.path);
-        _pushImagePreviewPage();
-      } else {
-        print('No image selected');
+    if (cameraFile != null){
+      File? croppedFile = await ImageProcessingProvider.imageCrop(cameraFile);
+      // Cropped
+      if (croppedFile != null) {
+        setState(() {
+          _image = File(croppedFile.path);
+        });
       }
-    });
+      // Not cropped
+      else{
+        setState(() {
+          _image = File(cameraFile.path);
+        });
+        print('crop canceled');
+      }
+      _pushImagePreviewPage();
+    } else {
+      print('No image selected');
+    }
   }
 
   Future<void> _initLocationService() async{
@@ -121,7 +143,7 @@ How many different birds can you spot?''';
   @override
   Widget build(BuildContext context) {
     MediaQueryData mediaQueryData = MediaQuery.of(context);
-    double verticalPadding = mediaQueryData.size.height * 0.1;
+    double verticalPadding = mediaQueryData.size.height * 0.08;
     double horizontalPadding = mediaQueryData.size.width * 0.05;
 
     return Scaffold(

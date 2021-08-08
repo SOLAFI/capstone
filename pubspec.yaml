@@ -35,6 +35,7 @@ dependencies:
 
   # Image related
   image_picker: ^0.8.0+3
+  image_cropper: ^1.4.1
 
   # Database & file
   sqflite:

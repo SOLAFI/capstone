@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:capstone/pages/select_location.dart';
 import 'package:capstone/widgets/text.dart';
@@ -8,7 +7,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:http/http.dart' as http;
 
 class PredictionResultPage extends StatefulWidget{
   PredictionResultPage({Key? key, required this.result, required this.recordID}) : super(key: key);

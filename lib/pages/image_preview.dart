@@ -1,3 +1,4 @@
+import 'package:capstone/utils/image_processing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -62,8 +63,8 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       data: formData,
       onSendProgress: (int current, int total) {setState(() {
         _sendProgress = current/total;
-      });}
-    ).then((response){
+      });},
+    ).timeout(Duration(seconds: 30)).then((response){
       String result = '';
       reset();
       setState(() {
@@ -113,16 +114,30 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   // Image picker
   File _image = new File('none');
   final picker = ImagePicker();
+
   Future _selectImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-    setState(() {
-      if (pickedFile != null){
-        _image = File(pickedFile.path);
-        reset();
-      } else {
-        print('No image selected');
+    if (pickedFile != null){
+      File? croppedFile = await ImageProcessingProvider.imageCrop(pickedFile);
+      // Cropped
+      if (croppedFile != null) {
+        setState(() {
+          _image = File(croppedFile.path);
+        });
       }
-    });
+      // Not cropped
+      else{
+        setState(() {
+          _image = File(pickedFile.path);
+        });
+      }
+      // setState(() {
+      //   _image = File(pickedFile.path);
+      // });
+      reset();
+    } else {
+      print('No image selected');
+    }
   }
 
 
