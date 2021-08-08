@@ -34,12 +34,14 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
   late String genusName;
   late String speciesName;
 
+  String baseURL = "http://172.16.13.81:5000";
+
   Future<String> _getWikiInfo(String className) async {
     print(className);
     className = className.substring(1,className.length-1);
     print(className);
     var response = await Dio().post(
-      "http://172.16.13.81:5000/wiki",
+      "$baseURL/wiki",
       data: {
         "class_name": className
       },
@@ -112,7 +114,10 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                                       maxHeight: 500,
                                       maxWidth: 400,
                                     ),
-                                    child: Image.network(imageURL),
+                                    child: FadeInImage(
+                                      image: NetworkImage(imageURL),
+                                      placeholder: AssetImage('assets/images/image_placeholder.png'),
+                                    ),
                                   ),
                                   Positioned(
                                     right: 0,
