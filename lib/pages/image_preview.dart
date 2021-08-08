@@ -28,6 +28,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   Map<String, dynamic> postResponse = new Map();
 
   bool _isRecognizing = false;
+  bool _error = false;
   double _sendProgress = 0;
   int recCount = 0;
   String errorMessage = '';
@@ -38,6 +39,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       _isRecognizing = false;
       _sendProgress = 0;
       errorMessage = '';
+      _error = false;
     });
   }
 
@@ -69,7 +71,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       reset();
       setState(() {
         if(response.toString()=="invalid image"){
-          _isRecognizing = true;  // Only to disable the recognize button, not really recognizing
+          _error = true;
           errorMessage = 'Recognition failed :(\nIs this an image of a bird?';
           result = response.toString();
         }
@@ -96,11 +98,18 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       RecDBProvider.insertRecord(rec);
       
     }).catchError((e){
+      setState(() {
+          _error = true;
+          _isRecognizing = false;
+      });
       if(e.runtimeType.toString() == 'DioError'){
         setState(() {
-          errorMessage = 'Network Error';
           if (e.type == DioErrorType.connectTimeout){
-            errorMessage += ': cannot reach server';
+            errorMessage += 'Network Error: cannot reach server';
+          }
+          else{
+            errorMessage = '''Recognition failed: server error ${e.response.statusCode.toString()}
+(possible cause: invalid file type)''';
           }
         });
       }
@@ -162,10 +171,8 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     return Scaffold(
       backgroundColor: Colors.white,
       floatingActionButton: FloatingBackButton(),
-      body: Center(
-        child: SizedBox(
-          height:mediaHeight*0.9,
-          width: mediaWidth*0.8,
+      body: SingleChildScrollView(
+        child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
@@ -235,7 +242,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
               Padding(
                 padding: const EdgeInsets.symmetric(vertical:8.0),
                 child: ElevatedButton(
-                  onPressed: _image.path=='none'||_isRecognizing ? null : _postToServer,
+                  onPressed: _image.path=='none'||_isRecognizing||_error ? null : _postToServer,
                   child: Padding(
                     padding: const EdgeInsets.symmetric(vertical: 6),
                     child: Column(
@@ -251,7 +258,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                   ),
                   
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(_image.path=='none'||_isRecognizing ? Colors.grey.shade400 : Colors.amber),
+                    backgroundColor: MaterialStateProperty.all<Color>(_image.path=='none'||_isRecognizing||_error ? Colors.grey.shade400 : Colors.amber),
                   ),
                 ),
               ),

@@ -43,9 +43,10 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
       data: {
         "class_name": className
       },
-    ).catchError((error){
+    ).catchError((e){
       setState(() {
         dioError = true;
+        print(e.response.statusCode);
       });
     });
     Map wikiInfo = JsonCodec().decode(response.toString());
@@ -94,7 +95,7 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                   future: _getWikiInfo(result),
                   builder: (context, snapshot){
                     if (dioError){
-                      return Text('Wiki failed to load');
+                      return Text('Oops! Something went wrong when searching for Wikipedia page');
                     }
                     if (snapshot.hasData){
                       if(snapshot.data.toString() == 'success'){
@@ -256,9 +257,6 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                             ),
                           ],
                         );
-                      }
-                      else{
-                        return Text('error: get wiki failed');
                       }
                     }
                     return SizedBox(
