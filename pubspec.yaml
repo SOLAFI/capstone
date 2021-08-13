@@ -24,6 +24,9 @@ dependencies:
   flutter:
     sdk: flutter
   
+  # Device info
+  device_info: ^2.0.2
+
   # HTTP client library
   dio: ^4.0.0
   http:

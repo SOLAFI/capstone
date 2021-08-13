@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'dart:core';
 import 'dart:io';
+import 'package:device_info/device_info.dart';
 
 import 'package:capstone/utils/sqlite_handler.dart';
 import 'package:capstone/pages/recognition_result.dart';
@@ -32,6 +33,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   double _sendProgress = 0;
   int recCount = 0;
   String errorMessage = '';
+  String device_number = '';
   late int recordID;
 
   void reset() {
@@ -58,11 +60,21 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     
     int timestamp = DateTime.now().millisecondsSinceEpoch;
     recordID = recCount+1;
+    
+    // Get device info
+    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+    if (Platform.isAndroid){
+      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
+      device_number = 'Android_'+androidDeviceInfo.androidId;
+    } else if (Platform.isIOS){
+      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
+      device_number = 'iOS_'+iosDeviceInfo.identifierForVendor;
+    }
 
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(_image.path, filename: _image.path.split('/').last),
       "timestamp": timestamp,
-      "device_number": "test",
+      "device_number": device_number,
       "local_id": recordID,
     });
 
