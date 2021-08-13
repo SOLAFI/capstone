@@ -33,13 +33,9 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
       onPressed: (){
         Navigator.of(context).pop();
         RecDBProvider.getRecordByID(widget.recordID).then((record){
-          Record updated = Record(
-            id: record.id,
-            imageURL: record.imageURL,
-            timestamp: record.timestamp,
-            result: record.result,
-            latitude: tappedPoint.latitude,
-            longitude: tappedPoint.longitude);
+          Record updated = record;
+          updated.latitude = tappedPoint.latitude;
+          updated.longitude = tappedPoint.longitude;
           RecDBProvider.updateRecord(updated).then((value){
             print('Record ${record.id} updated');
           }).onError((error, stackTrace){

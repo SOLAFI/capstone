@@ -5,16 +5,16 @@ class Record {
   final int timestamp;
   final String imageURL;
   final String result;
-  final double longitude;
-  final double latitude;
+  double longitude;
+  double latitude;
   
   Record({
     required this.id,
     required this.imageURL,
     required this.timestamp,
     required this.result,
-    required this.latitude,
-    required this.longitude,
+    this.latitude=-1,
+    this.longitude=-1,
   });
 
   Map<String, dynamic> toMap() {
@@ -37,8 +37,7 @@ Record:
   image url: $imageURL
   result: $result
   latitude: $latitude
-  longtitude: $longitude
-    ''';
+  longtitude: $longitude''';
   }
 
 }

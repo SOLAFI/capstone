@@ -55,12 +55,18 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     setState(() {
       _isRecognizing = true;
     });
+    
+    int timestamp = DateTime.now().millisecondsSinceEpoch;
+    recordID = recCount+1;
 
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(_image.path, filename: _image.path.split('/').last),
+      "timestamp": timestamp,
+      "device_number": "test",
+      "local_id": recordID,
     });
 
-    Dio(BaseOptions(connectTimeout: 3000)).post(
+    Dio(BaseOptions(connectTimeout: 15000)).post(
       "http://172.16.13.81:5000/recognize",
       data: formData,
       onSendProgress: (int current, int total) {setState(() {
@@ -85,15 +91,11 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
         */
       RecDBProvider.initDatabase();
       String uploadedImage = _image.path;
-      int timestamp = DateTime.now().millisecondsSinceEpoch;
-      recordID = recCount+1;
       Record rec = new Record(
         id: recordID,
         timestamp: timestamp,
         imageURL: uploadedImage,
         result: result,
-        latitude: 0,
-        longitude: 0,
       );
       RecDBProvider.insertRecord(rec);
       
@@ -105,11 +107,17 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       if(e.runtimeType.toString() == 'DioError'){
         setState(() {
           if (e.type == DioErrorType.connectTimeout){
-            errorMessage += 'Network Error: cannot reach server';
+            errorMessage += 'Network Error: connection timeout\nPlease check your nework connection';
+          }
+          else if (e.response!=null){
+            errorMessage = '''Recognition failed: server error ${e.response.statusCode.toString()}
+(internal error)''';
+          }
+          else if (e.type == DioErrorType.other){
+            errorMessage = "Connection to service failed\nPlease contact service admin";
           }
           else{
-            errorMessage = '''Recognition failed: server error ${e.response.statusCode.toString()}
-(possible cause: invalid file type)''';
+            errorMessage = e.toString();
           }
         });
       }
@@ -178,7 +186,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
             children: <Widget>[
               // Title: "Image Preview"
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                padding: EdgeInsets.only(top: mediaHeight*0.05, bottom: 20.0),
                 child: SizedBox(
                   width: mediaWidth*0.8,
                   child: Row(
@@ -279,7 +287,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                 ),
               ),
               // Recognizing...
-              _isRecognizing && _sendProgress==1 ? Column(
+              _isRecognizing ? Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(8.0),
