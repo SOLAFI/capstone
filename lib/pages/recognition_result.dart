@@ -36,7 +36,6 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
   String baseURL = "http://172.16.13.81:5000";
 
   Future<String> _getWikiInfo(String className) async {
-    className = className.substring(1,className.length-1);
     print(className);
     var response = await Dio().post(
       "$baseURL/wiki",
