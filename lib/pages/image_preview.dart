@@ -1,3 +1,4 @@
+import 'package:capstone/utils/device_info.dart';
 import 'package:capstone/utils/image_processing.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:dio/dio.dart';
 import 'dart:core';
 import 'dart:io';
-import 'package:device_info/device_info.dart';
 
 import 'package:capstone/utils/sqlite_handler.dart';
 import 'package:capstone/pages/recognition_result.dart';
@@ -33,7 +33,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   double _sendProgress = 0;
   int recCount = 0;
   String errorMessage = '';
-  String deviceNumber = '';
+  late String deviceInfo;
   late int recordID;
 
   void reset() {
@@ -63,20 +63,12 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     int recCount = await getRecordsCount();
     recordID = recCount + 1;
     
-    // Get device info
-    DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
-    if (Platform.isAndroid){
-      AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-      deviceNumber = 'Android_'+androidDeviceInfo.androidId;
-    } else if (Platform.isIOS){
-      IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
-      deviceNumber = 'iOS_'+iosDeviceInfo.identifierForVendor;
-    }
+    deviceInfo = await DeviceInfoProvider.gerDeviceInfo();
 
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(_image.path, filename: _image.path.split('/').last),
       "timestamp": timestamp,
-      "device_number": deviceNumber,
+      "device_number": deviceInfo,
       "local_id": recordID,
     });
 

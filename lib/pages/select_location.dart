@@ -1,4 +1,5 @@
 import 'package:capstone/data/record.dart';
+import 'package:capstone/utils/device_info.dart';
 import 'package:capstone/utils/sqlite_handler.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class SelectLocationPage extends StatefulWidget {
 
   final int recordID;
 
-  const SelectLocationPage({ Key? key, required this.recordID }) : super(key: key);
+  const SelectLocationPage({ Key? key, required this.recordID}) : super(key: key);
 
   @override
   _SelectLocationPageState createState() => _SelectLocationPageState();
@@ -28,6 +29,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
     return locationData;
   }
 
+
   @override
   Widget build(BuildContext context) {
 
@@ -39,18 +41,28 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
           updated.latitude = tappedPoint.latitude;
           updated.longitude = tappedPoint.longitude;
           RecDBProvider.updateRecord(updated).then((value){
-            print('Record ${record.id} updated');
+            print('Record ${record.id} updated locally');
           }).onError((error, stackTrace){
             print(error.toString());
           });
         }).onError((error, stackTrace) {print(error.toString());});
         // Update record on server in MongoDB
-        Dio().post(
+        DeviceInfoProvider.gerDeviceInfo().then((deviceInfo){
+          Dio().post(
           "$baseURL/update_location",
           data: {
-
+            "record_id": "${deviceInfo}_${widget.recordID}",
+            "location": {
+              "latitude": tappedPoint.latitude,
+              "longitude": tappedPoint.longitude,
+            }
           }
-        );
+        ).then((response){
+          if (response.toString() == "updated"){
+            print("Location updated on server for recognition record ${widget.recordID}");
+          }
+        }).onError((error, stackTrace) {print(error.toString());});
+        });
         Navigator.of(context).pop();
       },
       child: Icon(
