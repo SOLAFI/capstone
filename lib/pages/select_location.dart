@@ -1,6 +1,6 @@
 import 'package:capstone/data/record.dart';
 import 'package:capstone/utils/sqlite_handler.dart';
-import 'package:capstone/widgets/buttons.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
@@ -20,6 +20,8 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
 
   LatLng tappedPoint = LatLng(0,0);
 
+  String baseURL = "http://172.16.13.81:5000";
+
   Future<LocationData> _getMyLocation() async{
     Location location = new Location();
     LocationData locationData = await location.getLocation();
@@ -31,7 +33,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
 
     StatelessWidget confirmButton = FloatingActionButton(
       onPressed: (){
-        Navigator.of(context).pop();
+        // Update local record in SQLite
         RecDBProvider.getRecordByID(widget.recordID).then((record){
           Record updated = record;
           updated.latitude = tappedPoint.latitude;
@@ -42,6 +44,14 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
             print(error.toString());
           });
         }).onError((error, stackTrace) {print(error.toString());});
+        // Update record on server in MongoDB
+        Dio().post(
+          "$baseURL/update_location",
+          data: {
+
+          }
+        );
+        Navigator.of(context).pop();
       },
       child: Icon(
         Icons.check,

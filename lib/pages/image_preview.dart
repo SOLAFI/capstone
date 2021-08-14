@@ -33,7 +33,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   double _sendProgress = 0;
   int recCount = 0;
   String errorMessage = '';
-  String device_number = '';
+  String deviceNumber = '';
   late int recordID;
 
   void reset() {
@@ -46,8 +46,9 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   }
 
 
-  Future<void> getRecordsCount() async{
+  Future<int> getRecordsCount() async{
     recCount = await RecDBProvider.recordsCount();
+    return recCount;
   }
 
 
@@ -59,22 +60,23 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     });
     
     int timestamp = DateTime.now().millisecondsSinceEpoch;
-    recordID = recCount+1;
+    int recCount = await getRecordsCount();
+    recordID = recCount + 1;
     
     // Get device info
     DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
     if (Platform.isAndroid){
       AndroidDeviceInfo androidDeviceInfo = await deviceInfo.androidInfo;
-      device_number = 'Android_'+androidDeviceInfo.androidId;
+      deviceNumber = 'Android_'+androidDeviceInfo.androidId;
     } else if (Platform.isIOS){
       IosDeviceInfo iosDeviceInfo = await deviceInfo.iosInfo;
-      device_number = 'iOS_'+iosDeviceInfo.identifierForVendor;
+      deviceNumber = 'iOS_'+iosDeviceInfo.identifierForVendor;
     }
 
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(_image.path, filename: _image.path.split('/').last),
       "timestamp": timestamp,
-      "device_number": device_number,
+      "device_number": deviceNumber,
       "local_id": recordID,
     });
 
@@ -177,7 +179,6 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
   void initState() {
     super.initState();
     _image = widget.image;
-    getRecordsCount();
   }
 
 
@@ -283,7 +284,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
                 ),
               ),
               _sendProgress==0||_sendProgress==1 ? Container() : Padding(
-                padding: const EdgeInsets.only(top:8.0),
+                padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 20),
                 child: Column(
                   children: [
                     Text('Image uploading:', style: TextStyle(color: Colors.grey),),

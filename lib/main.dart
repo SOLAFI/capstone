@@ -2,7 +2,6 @@ import 'package:capstone/pages/map.dart';
 import 'package:capstone/pages/user.dart';
 import 'package:capstone/utils/image_processing.dart';
 import 'package:capstone/utils/sqlite_handler.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'pages/image_preview.dart';
 
 import 'package:flutter/material.dart';
