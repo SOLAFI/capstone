@@ -76,205 +76,245 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
     return Card(
       shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
-      child: SizedBox(
-        width: mediaWidth,
-        height: mediaHeight*0.82,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                // Title label
-                PoppinsTitleText('Result:', 20, Colors.grey, TextAlign.center),
-                // Class name
-                PoppinsTitleText(result, 28, Colors.black, TextAlign.center),
-                // From Wiki
-                FutureBuilder(
-                  future: _getWikiInfo(result),
-                  builder: (context, snapshot){
-                    if (dioError){
-                      return Text('Oops! Something went wrong when searching for Wikipedia page');
-                    }
-                    if (snapshot.hasData){
-                      if(snapshot.data.toString() == 'success'){
-                        return Column(
-                          children: [
-                            // Wiki infobox image
-                            Padding(
-                              padding: const EdgeInsets.only(bottom: 10.0),
-                              child: Stack(
-                                children: [
-                                  ConstrainedBox(
-                                    constraints: BoxConstraints(
-                                      maxHeight: 500,
-                                      maxWidth: 400,
-                                    ),
-                                    child: FadeInImage(
-                                      image: NetworkImage(imageURL),
-                                      placeholder: AssetImage('assets/images/image_placeholder.png'),
-                                    ),
-                                  ),
-                                  Positioned(
-                                    right: 0,
-                                    child: GestureDetector(
-                                      onTap: (){
-                                        Navigator.of(context).push(MaterialPageRoute(
-                                          builder: (context) => SelectLocationPage(recordID: widget.recordID)
-                                        ));
-                                      },
-                                      child: Card(
-                                        color: Colors.white70,
-                                        elevation: 2,
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            children: [
-                                              Image.asset(
-                                                'assets/images/icons/pin.png',
-                                                width: 18,
-                                                height: 18,
+      child: Stack(
+        children: [
+          // Content
+          SizedBox(
+            width: mediaWidth,
+            height: mediaHeight*0.82,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 40.0, vertical: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Column(
+                      children: [
+                        // Result label
+                        PoppinsTitleText('Result:', 20, Colors.grey, TextAlign.center),
+                        // Class name
+                        PoppinsTitleText(result, 28, Colors.black, TextAlign.center),
+                      ],
+                    ),
+                    // From Wiki
+                    FutureBuilder(
+                      future: _getWikiInfo(result),
+                      builder: (context, snapshot){
+                        if (dioError){
+                          return Text('Oops! Something went wrong when searching for Wikipedia page');
+                        }
+                        if (snapshot.hasData){
+                          if(snapshot.data.toString() == 'success'){
+                            return Column(
+                              children: [
+                                // Wiki infobox image
+                                Padding(
+                                  padding: const EdgeInsets.only(bottom: 10.0),
+                                  child: Stack(
+                                    children: [
+                                      ConstrainedBox(
+                                        constraints: BoxConstraints(
+                                          maxHeight: 500,
+                                          maxWidth: 400,
+                                        ),
+                                        child: FadeInImage(
+                                          image: NetworkImage(imageURL),
+                                          placeholder: AssetImage('assets/images/image_placeholder.png'),
+                                        ),
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        child: GestureDetector(
+                                          onTap: (){
+                                            Navigator.of(context).push(MaterialPageRoute(
+                                              builder: (context) => SelectLocationPage(recordID: widget.recordID)
+                                            ));
+                                          },
+                                          child: Card(
+                                            color: Colors.white70,
+                                            elevation: 2,
+                                            child: Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/images/icons/pin.png',
+                                                    width: 18,
+                                                    height: 18,
+                                                  ),
+                                                  Text(
+                                                    ' Pin this bird on map',
+                                                    style: TextStyle(
+                                                      color: Colors.deepPurple,
+                                                    ),
+                                                  ),
+                                                ],
                                               ),
-                                              Text(
-                                                ' Pin this bird on map',
-                                                style: TextStyle(
-                                                  color: Colors.deepPurple,
-                                                ),
-                                              ),
-                                            ],
+                                            ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            // Feedback
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                GestureDetector(
-                                  onTap: (){
-                                    _reportDialog(context);
-                                  },
-                                  child: Row(
-                                    children: [
-                                      Text(
-                                        'Report an issue',
-                                        style: TextStyle(
-                                          color: reportIssueColor,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(5, 0, 10, 5),
-                                        child: Icon(
-                                          Icons.feedback,
-                                          color: reportIssueColor,
-                                        ),
-                                      ),
                                     ],
                                   ),
                                 ),
-                                ThumbUpWidget(),
-                              ],
-                            ),
-                            // Class details
-                            Padding(
-                              padding: const EdgeInsets.only(top:8.0),
-                              child: Card(
-                                shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
-                                elevation: 5,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(10),
+                                // Feedback
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    GestureDetector(
+                                      onTap: (){
+                                        _reportDialog(context);
+                                      },
+                                      child: Row(
+                                        children: [
+                                          Text(
+                                            'Report an issue',
+                                            style: TextStyle(
+                                              color: reportIssueColor,
+                                            ),
+                                          ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(5, 0, 10, 5),
+                                            child: Icon(
+                                              Icons.feedback,
+                                              color: reportIssueColor,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    ThumbUpWidget(),
+                                  ],
+                                ),
+                                // Class details
+                                Padding(
+                                  padding: const EdgeInsets.only(top:8.0),
+                                  child: Card(
+                                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(10))),
+                                    elevation: 5,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(10),
+                                      child: Column(
+                                        children: [
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              PoppinsTitleText('Order: ', 16, Colors.grey.shade500, TextAlign.start),
+                                              Text(orderName)
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              PoppinsTitleText('Family: ', 16, Colors.grey.shade600, TextAlign.start),
+                                              Text(familyName)
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              PoppinsTitleText('Genus: ', 16, Colors.grey.shade700, TextAlign.start),
+                                              Text(genusName)
+                                            ],
+                                          ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              PoppinsTitleText('Species: ', 16, Colors.grey.shade800, TextAlign.start),
+                                              Text(speciesName)
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                // Title - Summary
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 20.0),
+                                  child: PoppinsTitleText('Summary', 24, Colors.black, TextAlign.center),
+                                ),
+                                // Summary text
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                  child: Text(summary,
+                                  textAlign: TextAlign.justify,),
+                                ),
+                                // Link to wiki
+                                Padding(
+                                  padding: const EdgeInsets.symmetric(vertical: 10.0),
                                   child: Column(
                                     children: [
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          PoppinsTitleText('Order: ', 16, Colors.grey.shade500, TextAlign.start),
-                                          Text(orderName)
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          PoppinsTitleText('Family: ', 16, Colors.grey.shade600, TextAlign.start),
-                                          Text(familyName)
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          PoppinsTitleText('Genus: ', 16, Colors.grey.shade700, TextAlign.start),
-                                          Text(genusName)
-                                        ],
-                                      ),
-                                      Row(
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          PoppinsTitleText('Species: ', 16, Colors.grey.shade800, TextAlign.start),
-                                          Text(speciesName)
-                                        ],
-                                      ),
+                                      Text("\nSee full wiki page at:"),
+                                      GestureDetector(
+                                        onTap: (){
+                                          _launchURL(pageURL);
+                                        },
+                                        child: Text(pageURL,
+                                          style: TextStyle(
+                                            color: Theme.of(context).primaryColor,
+                                            decoration: TextDecoration.underline,
+                                          ),
+                                        ),
+                                      )
                                     ],
                                   ),
                                 ),
-                              ),
-                            ),
-                            // Title - Summary
-                            Padding(
-                              padding: const EdgeInsets.only(top: 20.0),
-                              child: PoppinsTitleText('Summary', 24, Colors.black, TextAlign.center),
-                            ),
-                            // Summary text
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Text(summary,
-                              textAlign: TextAlign.justify,),
-                            ),
-                            // Link to wiki
-                            Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 10.0),
-                              child: Column(
-                                children: [
-                                  Text("\nSee full wiki page at:"),
-                                  GestureDetector(
-                                    onTap: (){
-                                      _launchURL(pageURL);
-                                    },
-                                    child: Text(pageURL,
-                                      style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        decoration: TextDecoration.underline,
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ],
+                              ],
+                            );
+                          }
+                        }
+                        return SizedBox(
+                          height: 200,
+                          width: MediaQuery.of(context).size.width,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              CupertinoActivityIndicator(radius: 35,),
+                              Text('Loading Wikipedia data...'),
+                            ],
+                          )
                         );
                       }
-                    }
-                    return SizedBox(
-                      height: 200,
-                      width: MediaQuery.of(context).size.width,
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          CupertinoActivityIndicator(radius: 35,),
-                          Text('Loading Wikipedia data...'),
-                        ],
-                      )
-                    );
-                  }
+                    ),
+                  ],
                 ),
-              ],
+              ),
             ),
           ),
-        ),
+          // Home button
+          Positioned(
+            left: 10,
+            top: 5,
+            child: IconButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+              icon: Icon(
+                Icons.home_outlined,
+                size: 36,
+                color: Colors.deepPurple.shade400,
+              ),
+            ),
+          ),
+          // Close button
+          Positioned(
+            right: 10,
+            top: 5,
+            child: IconButton(
+              onPressed: (){
+                Navigator.of(context).pop();
+              },
+              icon: Icon(
+                Icons.close_rounded,
+                size: 36,
+                color: Colors.deepPurple.shade400,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
