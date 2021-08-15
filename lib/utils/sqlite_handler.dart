@@ -11,10 +11,10 @@ class RecDBProvider {
       join(await getDatabasesPath(), 'record_database.db'),
       onCreate: (db, version){
         return db.execute(
-          'CREATE TABLE records(id INTEGER PRIMARY KEY, timestamp INTEGER, image_url TEXT, result TEXT, latitude REAL, longitude REAL)',
+          'CREATE TABLE records(id INTEGER PRIMARY KEY, timestamp INTEGER, image_path TEXT, result TEXT, latitude REAL, longitude REAL, image_stream TEXT)',
         );
       },
-      version: 1,
+      version: 4,
     );
   }
 
@@ -31,15 +31,14 @@ class RecDBProvider {
     // Query the table for all The Dogs.
     final List<Map<String, dynamic>> maps = await db.query('records');
 
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    // Convert the List<Map<String, dynamic> into a List.
     return List.generate(maps.length, (i) {
       return Record(
         id: maps[i]['id'],
-        imageURL: maps[i]['image_url'],
+        imagePath: maps[i]['image_path'],
         result: maps[i]['result'],
         timestamp: maps[i]['timestamp'],
-        latitude: maps[i]['latitude'],
-        longitude: maps[i]['longitude'],
+        imageStream: maps[i]['image_stream'],
       );
     });
   }
@@ -49,18 +48,16 @@ class RecDBProvider {
     // Get a reference to the database.
     final db = await initDatabase();
 
-    // Query the table for all The Dogs.
+    // Query the table for all
     final List<Map<String, dynamic>> maps = await db.query('records');
 
-    // Convert the List<Map<String, dynamic> into a List<Dog>.
+    // Convert the List<Map<String, dynamic> into a List<Record>.
     List records = List.generate(maps.length, (i) {
       return Record(
         id: maps[i]['id'],
-        imageURL: maps[i]['image_url'],
+        imagePath: maps[i]['image_path'],
         result: maps[i]['result'],
-        timestamp: 0,
-        latitude: 0,
-        longitude: 0,
+        timestamp: maps[i]['timestamp'],
       );
     });
 
@@ -105,11 +102,9 @@ class RecDBProvider {
       Map rec = maps.first;
       return Record(
         id: rec['id'],
-        imageURL: rec['image_url'],
+        imagePath: rec['image_path'],
         timestamp: rec['timestamp'],
         result: rec['result'],
-        latitude: rec['latitude'],
-        longitude: rec['longitude'],
       );
     }
     else {

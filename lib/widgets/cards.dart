@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:capstone/data/record.dart';
@@ -5,7 +6,8 @@ import 'package:flutter/material.dart';
 
 class MapInfoCard extends StatefulWidget {
   final Record record;
-  const MapInfoCard({ Key? key, required this.record }) : super(key: key);
+  final String globalID;
+  const MapInfoCard({ Key? key, required this.globalID, required this.record }) : super(key: key);
 
   @override
   _MapInfoCardState createState() => _MapInfoCardState();
@@ -30,9 +32,9 @@ class _MapInfoCardState extends State<MapInfoCard> {
                   maxHeight: 350,
                   maxWidth: MediaQuery.of(context).size.width*0.45,
                 ),
-                child: Image.file(
-                        File(widget.record.imageURL)
-                      ),
+                child: Image.memory(
+                  base64Decode(widget.record.imageStream),
+                ),
               ),
             ),
             SizedBox(

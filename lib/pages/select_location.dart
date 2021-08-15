@@ -44,7 +44,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
           RecDBProvider.updateRecord(updated).then((value){
             print('Record ${record.id} updated locally');
           }).onError((error, stackTrace){
-            print(error.toString());
+            print(stackTrace.toString());
           });
         }).onError((error, stackTrace) {print(error.toString());});
         // Update record on server in MongoDB
@@ -81,7 +81,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
       builder: (ctx) =>
       Container(
         child: Image.asset(
-          'assets/images/icons/pin.png',
+          'assets/images/icons/pin_my_record.png',
           width: 40,
           height: 40,
         ),

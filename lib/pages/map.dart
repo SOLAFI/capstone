@@ -1,8 +1,9 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:capstone/data/record.dart';
-import 'package:capstone/utils/sqlite_handler.dart';
+import 'package:capstone/utils/device_info.dart';
 import 'package:capstone/widgets/cards.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:flutter_map/plugin_api.dart';
@@ -48,52 +49,68 @@ class _MapPageState extends State<MapPage>{
           future: getRecords(),
           builder: (context, snapshot){
             if (snapshot.hasData) {
-              List records = snapshot.data as List<Record>;
+              List records = snapshot.data as List;
               if(records.length!=0){
                 for(int i=0; i<records.length; i++){
-                  // print(records[i].toString());
-                  if (records[i].latitude!=0 && records[i].longitude!=0) {
-                    markers.add(Marker(
-                      height: 70,
-                      width: 70,
-                      point: LatLng(records[i].latitude, records[i].longitude),
-                      builder: (ctx) => GestureDetector(
-                        onTap: (){
-                          showBottomSheet(context: context, builder: (context){
-                            return MapInfoCard(record: records[i]);
-                          });
-                          setState(() {
-                            backButton = FloatingActionButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                                setState(() {
-                                  backButton = FloatingBackButton();
-                                });
-                              },
-                              child: Icon(
-                                Icons.close,
-                                color: Colors.white,
-                              ),
-                              backgroundColor: Colors.grey,
-                            );
-                          });
-                        },
-                        child: Card(
-                                color: Colors.deepPurple.shade200,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(5.0),
-                                  child: Image.file(
-                                    File(records[i].imageURL),
-                                    width: 65,
-                                    height: 65,
-                                    fit: BoxFit.cover,
-                                  ),
+                  double latitude = records[i]['location']['latitude'];
+                  double longitude = records[i]['location']['longitude'];
+                  List idList = records[i]['record_id'].split('_');
+                  String globalID = records[i]['record_id'];
+                  int id = int.parse(idList[idList.length-1]);
+                  int timestamp = int.parse(records[i]['timestamp']);
+                  String imagePath = records[i]['image_path'];
+                  String result = records[i]['result'];
+                  String imageStream = records[i]['image_stream'];
+                  String myDevice = '';
+                  DeviceInfoProvider.gerDeviceInfo().then((value) {
+                    myDevice = value;
+                    if (latitude!=0 && longitude!=0) {
+                      markers.add(Marker(
+                        height: 40,
+                        width: 40,
+                        point: LatLng(latitude, longitude),
+                        builder: (ctx) => GestureDetector(
+                          onTap: (){
+                            showBottomSheet(context: context, builder: (context){
+                              return MapInfoCard(globalID: globalID, record: Record(
+                                id: id,
+                                imagePath: imagePath,
+                                timestamp: timestamp,
+                                latitude: latitude,
+                                longitude: longitude,
+                                result: result,
+                                imageStream: imageStream
+                                )
+                              );
+                            });
+                            setState(() {
+                              backButton = FloatingActionButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  setState(() {
+                                    backButton = FloatingBackButton();
+                                  });
+                                },
+                                child: Icon(
+                                  Icons.close,
+                                  color: Colors.white,
                                 ),
-                              ),
-                      )
-                      )
-                    );
-                  }
+                                backgroundColor: Colors.grey,
+                              );
+                            });
+                          },
+                          child: (globalID.contains(myDevice))?
+                            Image.asset('assets/images/icons/pin_my_record.png',
+                              width: 40,
+                              height: 40,)
+                            :Image.asset('assets/images/icons/pin.png',
+                              width: 40,
+                              height: 40,)
+                          )
+                        )
+                      );
+                    }
+                  });
                 }
                 if (markers.length==0){
                   print('Records: no valid record');
@@ -109,21 +126,6 @@ class _MapPageState extends State<MapPage>{
                     return Text('error');
                   }
                   if(snapshot.hasData){
-                    Marker currentLocation = Marker(
-                      width: 40,
-                      height: 40,
-                      point: LatLng(snapshot.data.latitude, snapshot.data.longitude),
-                      anchorPos: anchorPos,
-                      builder: (ctx) =>
-                      Container(
-                        child: Image.asset(
-                          'assets/images/icons/pin.png',
-                          width: 40,
-                          height: 40,
-                        ),
-                      ),
-                    );
-                    markers.add(currentLocation);
                         
                     return FlutterMap(
                               options: MapOptions(
@@ -166,8 +168,14 @@ class _MapPageState extends State<MapPage>{
     );
   }
 
-  Future<List<Record>> getRecords() async {
-    return RecDBProvider.records();
+  Future<List> getRecords() async {
+    Response response = await Dio().get(
+      'http://172.16.13.81:5000/map_records'
+    ).catchError((e){
+      print(e.toString());
+    });
+    List list = JsonCodec().decode(response.data);
+    return list;
   }
 
 }

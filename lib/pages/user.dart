@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:convert';
 
 import 'package:capstone/data/record.dart';
 import '../widgets/buttons.dart';
@@ -47,27 +48,28 @@ class _UserPageState extends State<UserPage>{
                 mainAxisExtent: 300,
               ),
               itemBuilder: (context, index){
-                Map rec = records[index].toMap();
+                Record rec = records[index];
                 return Card(
                   child: Stack(
                     children: [
-                      
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('ID: ${rec['id']}'),
-                          Text('Time: ${DateTime.fromMillisecondsSinceEpoch(rec['timestamp'])}'),
+                          Text('ID: ${rec.id}'),
+                          Text('Time: ${DateTime.fromMillisecondsSinceEpoch(rec.timestamp)}'),
                           Container(
                             width: 200,
                             height: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: FileImage(File(rec['image_url'])),
+                                image: MemoryImage(
+                                  base64Decode(rec.imageStream),
+                                ),
                                 fit: BoxFit.cover
                               )
                             ),
                           ),
-                          Text('Result: ${rec['result']}'),
+                          Text('Result: ${rec.result}'),
                         ],
                       ),
                     ],

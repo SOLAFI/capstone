@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:capstone/utils/device_info.dart';
 import 'package:capstone/utils/image_processing.dart';
 import 'package:flutter/cupertino.dart';
@@ -94,16 +96,21 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       });
       /*
           Insert a record to SQLite DB
-        */
-      RecDBProvider.initDatabase();
-      String uploadedImage = _image.path;
-      Record rec = new Record(
-        id: recordID,
-        timestamp: timestamp,
-        imageURL: uploadedImage,
-        result: result,
-      );
-      RecDBProvider.insertRecord(rec);
+        */ 
+      _image.readAsBytes().then((bytes){
+        String imageStream = base64Encode(bytes);
+        RecDBProvider.initDatabase();
+        String uploadedImage = _image.path;
+        Record rec = new Record(
+          id: recordID,
+          timestamp: timestamp,
+          imagePath: uploadedImage,
+          result: result,
+          imageStream: imageStream
+        );
+        RecDBProvider.insertRecord(rec);
+      });
+      
       
     }).catchError((e){
       setState(() {
