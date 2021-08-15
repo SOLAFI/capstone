@@ -31,6 +31,7 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
   late String familyName;
   late String genusName;
   late String speciesName;
+  late String imageStream;
   bool dioError = false;
 
   String baseURL = "http://172.16.13.81:5000";
@@ -57,7 +58,10 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
       familyName = wikiInfo['taxonomy']['family_name'];
       genusName = wikiInfo['taxonomy']['genus_name'];
       speciesName = wikiInfo['taxonomy']['species_name'];
+      imageStream = wikiInfo['image_stream'];
+      
     // });
+
     return 'success';
   }
 
@@ -117,13 +121,13 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                                           maxHeight: 500,
                                           maxWidth: 400,
                                         ),
-                                        child: FadeInImage(
-                                          image: NetworkImage(imageURL),
-                                          placeholder: AssetImage('assets/images/image_placeholder.png'),
+                                        child: Image.memory(
+                                            base64Decode(imageStream),
                                         ),
                                       ),
                                       Positioned(
                                         right: 0,
+                                        bottom: 0,
                                         child: GestureDetector(
                                           onTap: (){
                                             Navigator.of(context).push(MaterialPageRoute(
@@ -140,13 +144,14 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
                                                 children: [
                                                   Image.asset(
                                                     'assets/images/icons/pin.png',
-                                                    width: 18,
-                                                    height: 18,
+                                                    width: 15,
+                                                    height: 15,
                                                   ),
                                                   Text(
                                                     ' Pin this bird on map',
                                                     style: TextStyle(
                                                       color: Colors.deepPurple,
+                                                      fontSize: 12
                                                     ),
                                                   ),
                                                 ],
@@ -287,15 +292,22 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
           Positioned(
             left: 10,
             top: 5,
-            child: IconButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-                Navigator.of(context).pop();
-              },
-              icon: Icon(
-                Icons.home_outlined,
-                size: 36,
-                color: Colors.deepPurple.shade400,
+            child: Card(
+              elevation: 5,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              color: Colors.deepPurple.shade400,
+              child: IconButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(
+                  Icons.home_rounded,
+                  size: 34,
+                  color: Colors.white,
+                ),
               ),
             ),
           ),
@@ -303,14 +315,21 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
           Positioned(
             right: 10,
             top: 5,
-            child: IconButton(
-              onPressed: (){
-                Navigator.of(context).pop();
-              },
-              icon: Icon(
-                Icons.close_rounded,
-                size: 36,
-                color: Colors.deepPurple.shade400,
+            child: Card(
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15)),
+              ),
+              color: Colors.white,
+              child: IconButton(
+                onPressed: (){
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(
+                  Icons.close_rounded,
+                  size: 34,
+                  color: Colors.deepPurple.shade400,
+                ),
               ),
             ),
           ),
