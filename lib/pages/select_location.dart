@@ -20,6 +20,7 @@ class SelectLocationPage extends StatefulWidget {
 class _SelectLocationPageState extends State<SelectLocationPage> {
 
   LatLng tappedPoint = LatLng(0,0);
+  bool selected = false;
 
   String baseURL = "http://172.16.13.81:5000";
 
@@ -34,7 +35,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
   Widget build(BuildContext context) {
 
     StatelessWidget confirmButton = FloatingActionButton(
-      onPressed: (){
+      onPressed: selected ? (){
         // Update local record in SQLite
         RecDBProvider.getRecordByID(widget.recordID).then((record){
           Record updated = record;
@@ -64,12 +65,12 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
         }).onError((error, stackTrace) {print(error.toString());});
         });
         Navigator.of(context).pop();
-      },
+      } : null,
       child: Icon(
         Icons.check,
         color: Colors.white,
       ),
-      backgroundColor: Colors.deepPurple,
+      backgroundColor: selected?Colors.deepPurple:Colors.grey,
     );
 
     Marker tapped = Marker(
@@ -113,7 +114,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
                       subdomains: ['a', 'b', 'c']
                     ),
                     MarkerLayerOptions(
-                      markers: [tapped],
+                      markers: selected?[tapped]:[],
                     )
                   ],
                 );
@@ -128,6 +129,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
 
   void _saveLocation(LatLng latlng) {
     setState(() {
+      selected = true;
       tappedPoint = latlng;
     });
   }
