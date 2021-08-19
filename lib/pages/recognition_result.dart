@@ -7,6 +7,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:animated_widgets/animated_widgets.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:capstone/constants.dart';
 
 class PredictionResultPage extends StatefulWidget{
   PredictionResultPage({Key? key, required this.result, required this.recordID}) : super(key: key);
@@ -34,12 +35,10 @@ class _PredictionResultPageState extends State<PredictionResultPage> {
   late String imageStream;
   bool dioError = false;
 
-  String baseURL = "http://172.16.13.81:5000";
-
   Future<String> _getWikiInfo(String className) async {
     print(className);
     var response = await Dio().post(
-      "$baseURL/wiki",
+      WIKI_REQUEST,
       data: {
         "class_name": className
       },

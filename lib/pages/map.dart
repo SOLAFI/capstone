@@ -11,6 +11,7 @@ import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import '../widgets/buttons.dart';
 import 'package:flutter/material.dart';
+import 'package:capstone/constants.dart';
 
 class MapPage extends StatefulWidget{
 
@@ -170,7 +171,7 @@ class _MapPageState extends State<MapPage>{
 
   Future<List> getRecords() async {
     Response response = await Dio().get(
-      'http://172.16.13.81:5000/map_records'
+      MAP_RECORDS_REQUEST
     ).catchError((e){
       print(e.toString());
     });

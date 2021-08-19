@@ -14,6 +14,7 @@ import 'package:capstone/pages/recognition_result.dart';
 import '../widgets/buttons.dart';
 import '../widgets/text.dart';
 import '../data/record.dart';
+import 'package:capstone/constants.dart';
 
 
 
@@ -75,7 +76,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     });
 
     Dio(BaseOptions(connectTimeout: 15000)).post(
-      "http://172.16.13.81:5000/recognize",
+      RECOGNIZE_REQUEST,
       data: formData,
       onSendProgress: (int current, int total) {setState(() {
         _sendProgress = current/total;

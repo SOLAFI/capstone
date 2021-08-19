@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
+import 'package:capstone/constants.dart';
 
 class SelectLocationPage extends StatefulWidget {
 
@@ -50,7 +51,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
         // Update record on server in MongoDB
         DeviceInfoProvider.gerDeviceInfo().then((deviceInfo){
           Dio().post(
-          "$baseURL/update_location",
+          UPDATE_LOCATION_REQUEST,
           data: {
             "record_id": "${deviceInfo}_${widget.recordID}",
             "location": {
