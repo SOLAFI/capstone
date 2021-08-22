@@ -113,9 +113,6 @@ class _MapPageState extends State<MapPage>{
                     }
                   });
                 }
-                if (markers.length==0){
-                  print('Records: no valid record');
-                }
               }
               else{
                 print('MAP: no records to display');
