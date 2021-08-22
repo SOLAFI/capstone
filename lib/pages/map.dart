@@ -127,6 +127,22 @@ class _MapPageState extends State<MapPage>{
                     return Text('error');
                   }
                   if(snapshot.hasData){
+
+                    Marker currentLocation = Marker(
+                      width: 40,
+                      height: 40,
+                      point: LatLng(snapshot.data.latitude, snapshot.data.longitude),
+                      anchorPos: anchorPos,
+                      builder: (ctx) =>
+                      Container(
+                        child: Image.asset(
+                          'assets/images/icons/pin_my_location.png',
+                          width: 40,
+                          height: 40,
+                        ),
+                      ),
+                    );
+                    markers.add(currentLocation);
                         
                     return FlutterMap(
                               options: MapOptions(

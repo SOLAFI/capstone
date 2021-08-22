@@ -71,6 +71,7 @@ flutter:
     - assets/images/logo.png
     - assets/images/bird.png
     - assets/images/map.jpeg
+    - assets/images/icons/pin_my_location.png
     - assets/images/icons/pin_my_record.png
     - assets/images/icons/pin.png
     - assets/images/image_placeholder.png
