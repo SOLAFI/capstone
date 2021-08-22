@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:capstone/data/record.dart';
+import 'package:capstone/widgets/text.dart';
 import 'package:flutter/material.dart';
 
 class MapInfoCard extends StatefulWidget {
@@ -16,11 +17,12 @@ class MapInfoCard extends StatefulWidget {
 class _MapInfoCardState extends State<MapInfoCard> {
   @override
   Widget build(BuildContext context) {
+    DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(widget.record.timestamp);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       child: SizedBox(
-        height: 400,
+        height: 300,
         width: MediaQuery.of(context).size.width,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -29,7 +31,7 @@ class _MapInfoCardState extends State<MapInfoCard> {
               padding: const EdgeInsets.all(8.0),
               child: ConstrainedBox(
                 constraints: BoxConstraints(
-                  maxHeight: 350,
+                  maxHeight: 300,
                   maxWidth: MediaQuery.of(context).size.width*0.45,
                 ),
                 child: Image.memory(
@@ -41,13 +43,18 @@ class _MapInfoCardState extends State<MapInfoCard> {
               width: MediaQuery.of(context).size.width*0.4,
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      Text('Record ID: ${widget.record.id.toString()}'),
-                      Text('Timestamp: ${DateTime.fromMillisecondsSinceEpoch(widget.record.timestamp).toString()}'),
-                      Text('Result: ${widget.record.result}'),
-                      Text('Latitude: ${widget.record.longitude.toString()}'),
-                      Text('Longitude: ${widget.record.latitude.toString()}')
+                      // Text('Record ID: ${widget.record.id.toString()}'),
+                      PoppinsTitleText(
+                        widget.record.result,
+                        20,
+                        Colors.deepPurple,
+                        TextAlign.center),
+                        Text('\nFound at:'),
+                        Text('${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.second}'),
+                      // Text('Latitude: ${widget.record.longitude.toString()}'),
+                      // Text('Longitude: ${widget.record.latitude.toString()}')
                     ],
                   ),
             ),
