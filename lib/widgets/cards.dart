@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:capstone/data/record.dart';
+import 'package:capstone/utils/sqlite_handler.dart';
 import 'package:capstone/widgets/text.dart';
 import 'package:flutter/material.dart';
 
@@ -22,37 +23,144 @@ class _MapInfoCardState extends State<MapInfoCard> {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
       child: SizedBox(
-        height: 300,
+        height: 350,
         width: MediaQuery.of(context).size.width,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: ConstrainedBox(
-                constraints: BoxConstraints(
-                  maxHeight: 300,
-                  maxWidth: MediaQuery.of(context).size.width*0.45,
+            Stack(
+              children: [
+                Align(
+                  alignment: Alignment.topCenter,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 10.0, bottom: 8, right: 10.0, top: 15),
+                    child: ConstrainedBox(
+                      constraints: BoxConstraints(
+                        maxHeight: 170,
+                        maxWidth: MediaQuery.of(context).size.width*0.7,
+                      ),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(10)),
+                        ),
+                        elevation: 5,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(width: 10, color: Colors.grey.shade100),
+                            borderRadius: BorderRadius.all(Radius.circular(10)),
+                          ),
+                          child: Image.memory(
+                            base64Decode(widget.record.imageStream),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
                 ),
-                child: Image.memory(
-                  base64Decode(widget.record.imageStream),
-                ),
-              ),
+                FutureBuilder(
+                  future: RecDBProvider.checkIfRecognized(widget.record.result),
+                  builder: (context, snapshot){
+                    if(snapshot.hasData){
+                      bool found = snapshot.data as bool;
+                      if (!found) {
+                        return Positioned(
+                          top: 10,
+                          left: 0,
+                          child: Card(
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 8.0),
+                              child: Text(
+                                'NEW',
+                                style: TextStyle(
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 16,
+                                  color: Colors.deepPurple,
+                                ),
+                              ),
+                            ),
+                          ),
+                        );
+                      }
+                      return Container();
+                    }
+                    return Container();
+                  }
+                )
+              ],
             ),
             SizedBox(
-              width: MediaQuery.of(context).size.width*0.4,
+              height: 150,
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Text('Record ID: ${widget.record.id.toString()}'),
-                      PoppinsTitleText(
-                        widget.record.result,
-                        20,
-                        Colors.deepPurple,
-                        TextAlign.center),
-                        Text('\nFound at:'),
-                        Text('${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.second}'),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: MediaQuery.of(context).size.width*0.4,
+                              child: PoppinsTitleText(
+                                widget.record.result,
+                                25,
+                                Colors.black,
+                                TextAlign.start),
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Row(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(2.0),
+                                      child: Icon(
+                                        Icons.camera,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Text(
+                                      'uploaded at:',
+                                      style: TextStyle(
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Text(
+                                  '${dateTime.year}-${dateTime.month}-${dateTime.day} ${dateTime.hour}:${dateTime.second}',
+                                  style: TextStyle(
+                                    fontFamily: 'Poppins',
+                                    fontSize: 14,
+                                    color: Colors.deepPurple
+                                  ),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            'latitude: ${widget.record.latitude}',
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                          Text(
+                            'longitude: ${widget.record.longitude}',
+                            style: TextStyle(
+                              color: Colors.grey.shade600,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Text(
+                        'by: USER_${widget.globalID.split('_')[1].split('-')[0]} (${widget.globalID.split('_')[0]})',
+                        style: TextStyle(
+                          color: Colors.grey.shade400,
+                        ),
+                      ),
                       // Text('Latitude: ${widget.record.longitude.toString()}'),
                       // Text('Longitude: ${widget.record.latitude.toString()}')
                     ],

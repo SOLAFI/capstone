@@ -3,7 +3,6 @@ import 'dart:core';
 class Record {
   final int id;
   final int timestamp;
-  final String imagePath;
   final String result;
   double longitude;
   double latitude;
@@ -11,7 +10,6 @@ class Record {
   
   Record({
     required this.id,
-    required this.imagePath,
     required this.timestamp,
     required this.result,
     this.latitude=-1,
@@ -22,7 +20,6 @@ class Record {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'image_path': imagePath,
       'timestamp': timestamp,
       'result': result,
       'latitude': latitude,
@@ -37,7 +34,6 @@ class Record {
 Record:
   id: $id
   time: ${DateTime.fromMillisecondsSinceEpoch(timestamp)}
-  image url: $imagePath
   result: $result
   latitude: $latitude
   longtitude: $longitude''';

@@ -59,7 +59,6 @@ class _MapPageState extends State<MapPage>{
                   String globalID = records[i]['record_id'];
                   int id = int.parse(idList[idList.length-1]);
                   int timestamp = int.parse(records[i]['timestamp']);
-                  String imagePath = records[i]['image_path'];
                   String result = records[i]['result'];
                   String imageStream = records[i]['image_stream'];
                   String myDevice = '';
@@ -75,7 +74,6 @@ class _MapPageState extends State<MapPage>{
                             showBottomSheet(context: context, builder: (context){
                               return MapInfoCard(globalID: globalID, record: Record(
                                 id: id,
-                                imagePath: imagePath,
                                 timestamp: timestamp,
                                 latitude: latitude,
                                 longitude: longitude,

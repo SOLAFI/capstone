@@ -53,9 +53,18 @@ class _UserPageState extends State<UserPage>{
                     children: [
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          Text('ID: ${rec.id}'),
-                          Text('Time: ${DateTime.fromMillisecondsSinceEpoch(rec.timestamp)}'),
+                          Text('ID: ${rec.id}',
+                            style: TextStyle(
+                              fontSize: 10
+                            ),
+                          ),
+                          Text('Time: ${DateTime.fromMillisecondsSinceEpoch(rec.timestamp)}',
+                            style: TextStyle(
+                              fontSize: 10
+                            ),
+                          ),
                           Container(
                             width: 200,
                             height: 200,
@@ -68,7 +77,7 @@ class _UserPageState extends State<UserPage>{
                               )
                             ),
                           ),
-                          Text('Result: ${rec.result}'),
+                          Text('Result:\n${rec.result}'),
                         ],
                       ),
                     ],

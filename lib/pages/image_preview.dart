@@ -101,11 +101,9 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       _image.readAsBytes().then((bytes){
         String imageStream = base64Encode(bytes);
         RecDBProvider.initDatabase();
-        String uploadedImage = _image.path;
         Record rec = new Record(
           id: recordID,
           timestamp: timestamp,
-          imagePath: uploadedImage,
           result: result,
           imageStream: imageStream
         );

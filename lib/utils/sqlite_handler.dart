@@ -11,7 +11,7 @@ class RecDBProvider {
       join(await getDatabasesPath(), 'record_database.db'),
       onCreate: (db, version){
         return db.execute(
-          'CREATE TABLE records(id INTEGER PRIMARY KEY, timestamp INTEGER, image_path TEXT, result TEXT, latitude REAL, longitude REAL, image_stream TEXT)',
+          'CREATE TABLE records(id INTEGER PRIMARY KEY, timestamp INTEGER, result TEXT, latitude REAL, longitude REAL, image_stream TEXT)',
         );
       },
       version: 4,
@@ -35,10 +35,11 @@ class RecDBProvider {
     return List.generate(maps.length, (i) {
       return Record(
         id: maps[i]['id'],
-        imagePath: maps[i]['image_path'],
         result: maps[i]['result'],
         timestamp: maps[i]['timestamp'],
         imageStream: maps[i]['image_stream'],
+        longitude: maps[i]['longitude'],
+        latitude: maps[i]['latitude']
       );
     });
   }
@@ -55,7 +56,6 @@ class RecDBProvider {
     List records = List.generate(maps.length, (i) {
       return Record(
         id: maps[i]['id'],
-        imagePath: maps[i]['image_path'],
         result: maps[i]['result'],
         timestamp: maps[i]['timestamp'],
       );
@@ -102,13 +102,30 @@ class RecDBProvider {
       Map rec = maps.first;
       return Record(
         id: rec['id'],
-        imagePath: rec['image_path'],
         timestamp: rec['timestamp'],
         result: rec['result'],
+        imageStream: rec['image_stream'],
+        latitude: rec['latitude'],
+        longitude: rec['longitidue']
       );
     }
     else {
       throw 'Record with id: $id not found';
+    }
+  }
+
+  // Check if a species exists
+  static Future<bool> checkIfRecognized(String className) async{
+    final db = await initDatabase();
+    List<Map> maps = await db.query('records',
+      columns: ['id', 'result'],
+      where: 'result = ?',
+      whereArgs: [className],
+    );
+    if (maps.length>0) {
+      return true;
+    } else {
+      return false;
     }
   }
 }
