@@ -50,17 +50,12 @@ class _MapPageState extends State<MapPage>{
           future: getRecords(),
           builder: (context, snapshot){
             if (snapshot.hasData) {
-              List records = snapshot.data as List;
-              if(records.length!=0){
-                for(int i=0; i<records.length; i++){
-                  double latitude = records[i]['location']['latitude'];
-                  double longitude = records[i]['location']['longitude'];
-                  List idList = records[i]['record_id'].split('_');
-                  String globalID = records[i]['record_id'];
-                  int id = int.parse(idList[idList.length-1]);
-                  int timestamp = int.parse(records[i]['timestamp']);
-                  String result = records[i]['result'];
-                  String imageStream = records[i]['image_stream'];
+              List locations = snapshot.data as List;
+              if (locations.length != 0) {
+                for(int i=0; i<locations.length; i++){
+                  double latitude = locations[i]['latitude'];
+                  double longitude = locations[i]['longitude'];
+                  String globalID = locations[i]['record_id'];
                   String myDevice = '';
                   DeviceInfoProvider.getDeviceInfo().then((value) {
                     myDevice = value;
@@ -73,15 +68,7 @@ class _MapPageState extends State<MapPage>{
                         builder: (ctx) => GestureDetector(
                           onTap: (){
                             showBottomSheet(context: context, builder: (context){
-                              return MapInfoCard(globalID: globalID, record: Record(
-                                id: id,
-                                timestamp: timestamp,
-                                latitude: latitude,
-                                longitude: longitude,
-                                result: result,
-                                imageStream: imageStream
-                                )
-                              );
+                              return MapInfoCard(ID: globalID);
                             });
                             setState(() {
                               backButton = FloatingActionButton(
@@ -183,7 +170,7 @@ class _MapPageState extends State<MapPage>{
 
   Future<List> getRecords() async {
     Response response = await Dio().get(
-      MAP_RECORDS_REQUEST
+      MAP_RECORDS_LOCATIONS_REQUEST
     ).catchError((e){
       print(e.toString());
     });
