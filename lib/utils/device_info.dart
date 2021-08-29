@@ -5,7 +5,7 @@ import 'dart:io';
 class DeviceInfoProvider{
 
   // Get device info
-  static Future<String> gerDeviceInfo() async{
+  static Future<String> getDeviceInfo() async{
     DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     late String deviceInfo;
     if (Platform.isAndroid){

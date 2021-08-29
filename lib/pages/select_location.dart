@@ -49,7 +49,7 @@ class _SelectLocationPageState extends State<SelectLocationPage> {
           });
         }).onError((error, stackTrace) {print(error.toString());});
         // Update record on server in MongoDB
-        DeviceInfoProvider.gerDeviceInfo().then((deviceInfo){
+        DeviceInfoProvider.getDeviceInfo().then((deviceInfo){
           Dio().post(
           UPDATE_LOCATION_REQUEST,
           data: {

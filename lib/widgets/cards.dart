@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:capstone/data/record.dart';
+import 'package:capstone/utils/device_info.dart';
 import 'package:capstone/utils/sqlite_handler.dart';
 import 'package:capstone/widgets/text.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +16,23 @@ class MapInfoCard extends StatefulWidget {
 }
 
 class _MapInfoCardState extends State<MapInfoCard> {
+  
+  String userString = '';
+  
+  @override
+  void initState() {
+    DeviceInfoProvider.getDeviceInfo().then((deviceInfo){
+      setState(() {
+        if (widget.globalID.split('_')[1] == deviceInfo.split('_')[1]) {
+          userString = 'ME';
+        } else {
+          userString = 'USER_${widget.globalID.split('_')[1].split('-')[0]} (${widget.globalID.split('_')[0]})';
+        }
+      });
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(widget.record.timestamp);
@@ -26,11 +43,12 @@ class _MapInfoCardState extends State<MapInfoCard> {
         height: 350,
         width: MediaQuery.of(context).size.width,
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Stack(
               children: [
                 Align(
-                  alignment: Alignment.topCenter,
+                  alignment: Alignment.center,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 10.0, bottom: 8, right: 10.0, top: 15),
                     child: ConstrainedBox(
@@ -64,7 +82,7 @@ class _MapInfoCardState extends State<MapInfoCard> {
                       if (!found) {
                         return Positioned(
                           top: 10,
-                          left: 0,
+                          left: 10,
                           child: Card(
                             child: Padding(
                               padding: const EdgeInsets.symmetric(vertical: 1.0, horizontal: 8.0),
@@ -102,7 +120,7 @@ class _MapInfoCardState extends State<MapInfoCard> {
                               width: MediaQuery.of(context).size.width*0.4,
                               child: PoppinsTitleText(
                                 widget.record.result,
-                                25,
+                                20,
                                 Colors.black,
                                 TextAlign.start),
                             ),
@@ -155,10 +173,18 @@ class _MapInfoCardState extends State<MapInfoCard> {
                           ),
                         ],
                       ),
-                      Text(
-                        'by: USER_${widget.globalID.split('_')[1].split('-')[0]} (${widget.globalID.split('_')[0]})',
-                        style: TextStyle(
-                          color: Colors.grey.shade400,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 20.0, bottom: 5),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              'by: $userString',
+                              style: TextStyle(
+                                color: Colors.grey.shade400,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                       // Text('Latitude: ${widget.record.longitude.toString()}'),

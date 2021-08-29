@@ -66,7 +66,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
     int recCount = await getRecordsCount();
     recordID = recCount + 1;
     
-    deviceInfo = await DeviceInfoProvider.gerDeviceInfo();
+    deviceInfo = await DeviceInfoProvider.getDeviceInfo();
 
     FormData formData = FormData.fromMap({
       "file": await MultipartFile.fromFile(_image.path, filename: _image.path.split('/').last),

@@ -62,13 +62,14 @@ class _MapPageState extends State<MapPage>{
                   String result = records[i]['result'];
                   String imageStream = records[i]['image_stream'];
                   String myDevice = '';
-                  DeviceInfoProvider.gerDeviceInfo().then((value) {
+                  DeviceInfoProvider.getDeviceInfo().then((value) {
                     myDevice = value;
                     if (latitude!=0 && longitude!=0) {
                       markers.add(Marker(
                         height: 40,
                         width: 40,
                         point: LatLng(latitude, longitude),
+                        anchorPos: anchorPos,
                         builder: (ctx) => GestureDetector(
                           onTap: (){
                             showBottomSheet(context: context, builder: (context){
