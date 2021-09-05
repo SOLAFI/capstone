@@ -87,11 +87,11 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       setState(() {
         if(response.toString()=="invalid image"){
           _error = true;
-          errorMessage = 'Recognition failed :(\nIs this an image of a bird?';
+          errorMessage = 'Recognition failed :(\nWe cannot recognize this sepcies yet';
           result = response.toString();
         }
         else{
-          result = response.toString();
+          result = "Unable to recognize";
           showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(result: result, recordID: recordID,));
         }
       });
