@@ -75,7 +75,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       "local_id": recordID,
     });
 
-    Dio(BaseOptions(connectTimeout: 15000)).post(
+    Dio(BaseOptions(connectTimeout: 60000)).post(
       RECOGNIZE_REQUEST,
       data: formData,
       onSendProgress: (int current, int total) {setState(() {
@@ -91,7 +91,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
           result = response.toString();
         }
         else{
-          result = "Unable to recognize";
+          result = response.toString();
           showModalBottomSheet(context: context, builder: (context) => PredictionResultPage(result: result, recordID: recordID,));
         }
       });
