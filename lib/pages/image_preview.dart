@@ -75,7 +75,7 @@ class _ImagePreviewPageState extends State<ImagePreviewPage> {
       "local_id": recordID,
     });
 
-    Dio(BaseOptions(connectTimeout: 60000)).post(
+    Dio(BaseOptions(connectTimeout: 20000)).post(
       RECOGNIZE_REQUEST,
       data: formData,
       onSendProgress: (int current, int total) {setState(() {
